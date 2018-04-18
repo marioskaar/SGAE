@@ -21,7 +21,7 @@ import sgae.nucleo.gruposMusicales.ControladorGruposMusicales;
 import sgae.servidor.aplicacion.SGAEServerApplication;
 import sgae.util.generated.Albumes;
 //
-//public class AlbumesServerResource extends ServerResource {
+public class AlbumesServerResource extends ServerResource {
 //	
 //	SGAEServerApplication ref = (SGAEServerApplication)getApplication();
 //	ControladorGruposMusicales controladorGruposMusicales = ref.getControladorGruposMusicales();
