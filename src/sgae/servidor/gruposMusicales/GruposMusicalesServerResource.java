@@ -51,6 +51,7 @@ public class GruposMusicalesServerResource extends ServerResource{
 		for (String grupoMusical: controladorGruposMusicales.listarGruposMusicales()){
 			result.append((grupoMusical == null) ? "": grupoMusical).append('\n');
 		}
+
 		return result.toString();
 	}
 	//Método GET en formato XML
