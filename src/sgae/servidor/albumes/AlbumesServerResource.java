@@ -99,7 +99,6 @@ public class AlbumesServerResource extends ServerResource {
 		}
 	return result;
 	}	
-	@Post("form")
-	public
+	
 
 }
