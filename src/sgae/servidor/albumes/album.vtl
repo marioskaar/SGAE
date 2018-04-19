@@ -3,6 +3,7 @@
 <body>
 	<table>
 		<tbody>
+			#foreach($album in $albumes)
 			<tr>
 				<td>Id Album</td><td>$album.idAlbum</td>
 			</tr>
@@ -15,6 +16,7 @@
 			<tr>
 				<td>Ejemplares vendidos</td><td>$album.ejemplaresVendidos</td>
 			</tr>
+			#end
 		</tbody>
 	</table>
 </body>
