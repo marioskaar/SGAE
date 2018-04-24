@@ -1,9 +1,7 @@
 package sgae.servidor.aplicacion;
 import java.io.IOException;
 
-import org.restlet.Request;
 import org.restlet.representation.Representation;
-import org.restlet.representation.StringRepresentation;
 import org.restlet.resource.Get;
 import org.restlet.resource.ResourceException;
 import org.restlet.resource.ServerResource;
@@ -11,8 +9,7 @@ import org.restlet.ext.xml.DomRepresentation;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.Element;
-import java.io.File;
-import org.restlet.data.Status;
+//import java.io.File;
 
 public class RootServerResource extends ServerResource{
 	public RootServerResource(){
@@ -34,14 +31,22 @@ public class RootServerResource extends ServerResource{
 	@Get ("txt")
 	public String represent(){
 		System.out.println("The GET method of root resource is invoked");
+		String valor = new String();
+		/* //Detecta automoticamente los directorios
 		File file = new File(System.getProperty("user.dir")+"/src/sgae/nucleo");
 	    String files[] = file.list();
-	    String valor = new String();
 	    for (int i = 0; i < files.length; i++) {
 	    	valor = valor + "Nombre recurso: " + files[i] + "; URI relativo: " + files[i] + "/\n";
 	    }
+	    */
+
+		//Fijamos a mano los nombres y uris de los recursos un nivel por debajo del root
+		valor = "Nombre recurso: Grupos Musicales; URI relativo: gruposmusicales/"+"\n"
+		+ "Nombre recurso: Personas; URI relativo: personas/"+"\n"
+		+ "Nombre recurso: Discograficas; URI relativo: discograficas/";
 		return valor;
 	}
+
 	@Get ("xml")
 	public Representation toXml() throws IOException{
 	DomRepresentation result = new DomRepresentation();
