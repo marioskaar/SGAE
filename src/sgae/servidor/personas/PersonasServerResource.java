@@ -3,6 +3,7 @@ import java.util.List;
 
 import org.restlet.data.Status;
 import org.restlet.ext.jaxb.JaxbRepresentation;
+import org.restlet.representation.Representation;
 import org.restlet.resource.Get;
 import org.restlet.resource.ResourceException;
 import org.restlet.resource.ServerResource;
@@ -19,45 +20,45 @@ public class PersonasServerResource extends ServerResource{
     //Objeto de la clase ControladorPersonas que hace referencia al instanciado en la clase SGAEServerApplication
 	ControladorPersonas controladorPersonas = ref.getControladorPersonas();
 
-    //Tareas a realizar en la inicialización estándar del recurso
+    //Tareas a realizar en la inicializacion estandar del recurso
 	@Override
 	protected void doInit() throws ResourceException{
 		System.out.println("The personas resource was initialized");
 	}
 
-    //Tareas en la gestión estándar del recurso
+    //Tareas en la gestion estandar del recurso
 	@Override
 	protected void doCatch(Throwable throwable){
 		System.out.println("An exception was thrown in the personas resource");
 	}
 
-    //Tareas a realizar en la liberación estándar del recurso
+    //Tareas a realizar en la liberacion estandar del recurso
 	@Override
 	protected void doRelease() throws ResourceException{
 		System.out.println("The personas resource was release");
 	}
 
-    //Método GET en texto plano
+    //Metodo GET en texto plano
 	@Get("txt")
 	public String represent() {
 		StringBuilder result = new StringBuilder();
 
         //Si no hay ninguna persona registrada en la aplicacion devolvemos el estado
         //No Content en la respuesta
-        if(controladorPersonas.listarPersonas().size()==0) {
+		if(controladorPersonas.recuperarPersonas().size()==0){
             getResponse().setStatus(Status.SUCCESS_NO_CONTENT);
-        }else{
-            //Para cada persona de la lista, devolvemos su infobreve
-		    for (String persona: controladorPersonas.listarPersonas()){
-		        result.append((persona == null) ? "": persona).append('\n');
+        }else {
+            for (sgae.nucleo.personas.Persona p : controladorPersonas.recuperarPersonas()) {
+		        result.append("DNI: "+p.getDni()+" Nombre: "+p.getNombre()+" Apellidos: "
+		        		+p.getApellidos()+ " URI: personas/"+p.getDni()+"\n");
 		    }
         }
 		return result.toString();
 	}
 
-    //Método GET en formato XML
+    //Metodo GET en formato XML
 	@Get("xml")
-	public JaxbRepresentation toXml() {
+	public Representation toXml() {
 
 	    //objeto de la clase Personas sgae.util.generated
 		Personas personasXML = new Personas();

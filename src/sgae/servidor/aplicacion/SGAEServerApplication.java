@@ -7,8 +7,9 @@ import sgae.nucleo.gruposMusicales.ControladorGruposMusicales;
 import sgae.nucleo.gruposMusicales.ExcepcionGruposMusicales;
 import sgae.nucleo.personas.ControladorPersonas;
 import sgae.nucleo.personas.ExcepcionPersonas;
-import sgae.servidor.gruposMusicales.GruposMusicalesServerResource;
+import sgae.servidor.gruposMusicales.*;
 import sgae.servidor.personas.*;
+import sgae.servidor.albumes.*;
 
 import java.text.ParseException;
 
@@ -39,6 +40,16 @@ public class SGAEServerApplication extends Application{
 		} catch (ExcepcionPersonas excepcionPersonas) {
 			excepcionPersonas.printStackTrace();
 		}
+		
+		try{
+			controladorGruposMusicales.crearGrupoMusical("aaaaaaaa", "aaaaaasdasdasd", "01-02-1994");
+			controladorGruposMusicales.crearGrupoMusical("aaaabbbbaaaa", "bb", "11-11-1111");
+
+		}catch(ParseException a){
+			
+		}catch(ExcepcionGruposMusicales a){
+			
+		}
 	}
 	
 	@Override
@@ -48,11 +59,11 @@ public class SGAEServerApplication extends Application{
 		router.attach("/personas/",PersonasServerResource.class);
 		router.attach("/personas/{dni}",PersonaServerResource.class);
 		router.attach("/gruposmusicales/",GruposMusicalesServerResource.class);
-//		router.attach("/gruposmusicales/{cif}",grupoMusicalServerResource.class);
-//		router.attach("/albumes/",albumesServerResource.class);
-//		router.attach("/albumes/{albumId}",albumServerResource.class);
-//		router.attach("/albumes/pistas/",pistasServerResource.class);
-//		router.attach("/albumes/pistas/{pistaId}",pistaServerResource.class);
+		router.attach("/gruposmusicales/{cif}",GrupoMusicalServerResource.class);
+		router.attach("/gruposmusicales/{cif}/albumes/",AlbumesServerResource.class);
+		router.attach("/gruposmusicales/{cif}/albumes/{albumId}",AlbumServerResource.class);
+		router.attach("/gruposmusicales/{cif}/albumes/pistas/",PistasServerResource.class);
+		router.attach("/gruposmusicales/{cif}/albumes/pistas/{pistaId}",PistaServerResource.class);
 		return router;
 	}
 	public ControladorPersonas getControladorPersonas() {

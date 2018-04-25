@@ -3,6 +3,7 @@ package sgae.servidor.gruposMusicales;
 import java.util.List;
 
 import org.restlet.ext.jaxb.JaxbRepresentation;
+import org.restlet.representation.Representation;
 import org.restlet.resource.Get;
 import org.restlet.resource.ResourceException;
 import org.restlet.resource.ServerResource;
@@ -46,34 +47,40 @@ public class GruposMusicalesServerResource extends ServerResource{
 
 	    //Si no hay ningun grupo musical registrado en la aplicacion devolvemos el estado
         //No Content en la respuesta
-		if(controladorGruposMusicales.listarGruposMusicales().size()==0) {
+		if(controladorGruposMusicales.recuperarGruposMusicales().size()==0) {
 			getResponse().setStatus(Status.SUCCESS_NO_CONTENT);
-		}
-
-		//Para cada grupo almacenado en la lista, devolvemos su infobreve
-		for (String grupoMusical: controladorGruposMusicales.listarGruposMusicales()){
-			result.append((grupoMusical == null) ? "": grupoMusical).append('\n');
+		}else{
+			//Para cada grupo almacenado en la lista, devolvemos su infobreve
+			for (sgae.nucleo.gruposMusicales.GrupoMusical gm : controladorGruposMusicales.recuperarGruposMusicales()){
+				result.append("CIF: "+gm.getCif()+" Nombre: "+gm.getNombre()
+						+" Fecha Creacion: "+gm.getFechaCreacion()+" URI: gruposmusicales/"+gm.getCif()+"\n");
+			}
 		}
 		return result.toString();
 	}
 
 	//Método GET en formato XML
 	@Get("xml")
-	public JaxbRepresentation toXml() {
+	public Representation toXml() {
 		GruposMusicales gmsXML = new GruposMusicales();
         final List<GrupoMusicalInfoBreve> grupoMusicalInfoBreve = gmsXML.getGrupoMusicalInfoBreve();
-
-        for (sgae.nucleo.gruposMusicales.GrupoMusical gm : controladorGruposMusicales.recuperarGruposMusicales()){
-        	GrupoMusicalInfoBreve gmXML = new GrupoMusicalInfoBreve();
-            gmXML.setCif(gm.getCif());
-			gmXML.setNombre(gm.getNombre());
-			gmXML.setFechaCreacion(gm.getFechaCreacion());
-            Link link = new Link();
-            link.setHref("/grupoMusical/"+gm.getCif());
-			link.setTitle("GrupoMusical");
-			link.setType("simple");
-			gmXML.setUri(link);
-			grupoMusicalInfoBreve.add(gmXML);
+	    //Si no hay ningun grupo musical registrado en la aplicacion devolvemos el estado
+        //No Content en la respuesta
+		if(controladorGruposMusicales.recuperarGruposMusicales().size()==0) {
+			getResponse().setStatus(Status.SUCCESS_NO_CONTENT);
+		}else{
+	        for (sgae.nucleo.gruposMusicales.GrupoMusical gm : controladorGruposMusicales.recuperarGruposMusicales()){
+	        	GrupoMusicalInfoBreve gmXML = new GrupoMusicalInfoBreve();
+	            gmXML.setCif(gm.getCif());
+				gmXML.setNombre(gm.getNombre());
+				gmXML.setFechaCreacion(gm.getFechaCreacion());
+	            Link link = new Link();
+	            link.setHref("gruposmusicales/"+gm.getCif());
+				link.setTitle("GrupoMusical");
+				link.setType("simple");
+				gmXML.setUri(link);
+				grupoMusicalInfoBreve.add(gmXML);
+			}
 		}
         JaxbRepresentation<GruposMusicales> result = new JaxbRepresentation<GruposMusicales>(gmsXML);
 		result.setFormattedOutput(true);

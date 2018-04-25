@@ -1,33 +1,90 @@
 package sgae.servidor.personas;
 
-import org.restlet.Request;
 import org.restlet.data.Form;
+import org.restlet.data.Status;
+import org.restlet.ext.jaxb.JaxbRepresentation;
 import org.restlet.representation.Representation;
+import org.restlet.resource.Get;
 import org.restlet.resource.Put;
+import org.restlet.resource.ResourceException;
 import org.restlet.resource.ServerResource;
+
 import sgae.nucleo.personas.ControladorPersonas;
 import sgae.nucleo.personas.ExcepcionPersonas;
 import sgae.servidor.aplicacion.SGAEServerApplication;
 
-import java.io.IOException;
+
+import sgae.util.generated.Persona;
 import java.text.ParseException;
 
-public class PersonaServerResource extends ServerResource
-{
+public class PersonaServerResource extends ServerResource {
     SGAEServerApplication ref = (SGAEServerApplication)getApplication();
     ControladorPersonas controladorPersonas = ref.getControladorPersonas();
+    private String dni;
+    
+    //Tareas a realizar en la inicializacion estandar del recurso
+  	@Override
+  	protected void doInit() throws ResourceException{
+  		dni = getAttribute("dni");
+  		System.out.println("The persona resource was initialized");
+  	}
 
+    //Tareas a realizar en la liberacion estandar del recurso
+  	@Override
+  	protected void doRelease() throws ResourceException{
+  		System.out.println("The persona resource was release");
+  	}
+
+    //Metodo GET en texto plano
+  	@Get("txt")
+  	public String represent() {
+  		StringBuilder result = new StringBuilder();
+  		
+  		try{
+  			result.append(controladorPersonas.verPersona(this.dni));  			
+  		}catch(ExcepcionPersonas a){
+  			throw new ResourceException(Status.CLIENT_ERROR_NOT_FOUND);
+  		}
+  		
+  		return result.toString();
+  	}
+
+      //Metodo GET en formato XML
+  	@Get("xml")
+  	public Representation toXml() {
+  		
+  		Persona personaXML = new Persona();
+  		try{
+  			sgae.nucleo.personas.Persona persona = controladorPersonas.recuperarPersona(this.dni);
+  			personaXML.setDni(this.dni);
+  			personaXML.setNombre(persona.getNombre());
+  			personaXML.setApellidos(persona.getApellidos());
+  			personaXML.setFechaNacimiento(persona.getFechaNacimiento());
+  			
+  		}catch(ExcepcionPersonas a){
+  			throw new ResourceException(Status.CLIENT_ERROR_NOT_FOUND);
+  		}
+  		
+  		JaxbRepresentation<Persona> result = new JaxbRepresentation<Persona>(personaXML);
+  		result.setFormattedOutput(true);
+  		return result;
+  	}
+    
     @Put("form-data")
-    public void store(Representation data) throws IOException {
-
-        System.out.println(data.getText());
-        String dni = getRequest().getResourceRef().getLastSegment();
-        try {
-            controladorPersonas.crearPersona(dni,"a","b","01-12-12");
-        } catch (ParseException e) {
-            e.printStackTrace();
-        } catch (ExcepcionPersonas excepcionPersonas) {
-            excepcionPersonas.printStackTrace();
-        }
+    public String store(Representation data) {
+  		StringBuilder result = new StringBuilder();
+    	Form form = new Form(data);
+    	
+    	try{
+    		controladorPersonas.crearPersona(this.dni, form.getFirstValue("nombre"),
+    				form.getFirstValue("apellidos"), form.getFirstValue("fechaNacimiento"));
+    		result.append("Persona Creada\n"+ controladorPersonas.verPersona(this.dni));
+    		getResponse().setStatus(Status.SUCCESS_OK);
+    		return result.toString();
+    	}catch(ParseException a){
+    		throw new ResourceException(Status.CLIENT_ERROR_BAD_REQUEST);
+    	}catch(ExcepcionPersonas a){
+    		throw new ResourceException(Status.CLIENT_ERROR_BAD_REQUEST);
+    	}
     }
 }
