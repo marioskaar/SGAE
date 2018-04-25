@@ -2,7 +2,6 @@ package sgae.servidor.aplicacion;
 import java.io.IOException;
 
 import org.restlet.representation.Representation;
-import org.restlet.representation.StringRepresentation;
 import org.restlet.resource.Get;
 import org.restlet.resource.ResourceException;
 import org.restlet.resource.ServerResource;
@@ -10,7 +9,7 @@ import org.restlet.ext.xml.DomRepresentation;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.Element;
-import java.io.File;
+//import java.io.File;
 
 public class RootServerResource extends ServerResource{
 	public RootServerResource(){
@@ -22,6 +21,7 @@ public class RootServerResource extends ServerResource{
 	}
 	@Override
 	protected void doCatch(Throwable throwable){
+	    throwable.printStackTrace();
 		System.out.println("An exception was thrown in the root resource");
 	}
 	@Override
@@ -31,29 +31,37 @@ public class RootServerResource extends ServerResource{
 	@Get ("txt")
 	public String represent(){
 		System.out.println("The GET method of root resource is invoked");
+		String valor = new String();
+		/* //Detecta automoticamente los directorios
 		File file = new File(System.getProperty("user.dir")+"/src/sgae/nucleo");
 	    String files[] = file.list();
-	    String valor = new String();
 	    for (int i = 0; i < files.length; i++) {
-	    	valor = valor + "Nombre recurso: " + files[i] + "; URI relativo: /" + files[i] + "/\n";
+	    	valor = valor + "Nombre recurso: " + files[i] + "; URI relativo: " + files[i] + "/\n";
 	    }
+	    */
+
+		//Fijamos a mano los nombres y uris de los recursos un nivel por debajo del root
+		valor = "Nombre recurso: Grupos Musicales; URI relativo: gruposmusicales/"+"\n"
+		+ "Nombre recurso: Personas; URI relativo: personas/"+"\n"
+		+ "Nombre recurso: Discograficas; URI relativo: discograficas/";
 		return valor;
 	}
+
 	@Get ("xml")
 	public Representation toXml() throws IOException{
 	DomRepresentation result = new DomRepresentation();
 	result.setIndenting(true);
 	Document doc = result.getDocument();
-	
+
 	Node sgaeElt = doc.createElement("SGAE");
-	sgaeElt.setTextContent("Jerarqu�a");
+	sgaeElt.setTextContent("Jerarquia");
 	doc.appendChild(sgaeElt);
 	Node gm = doc.createElement("GruposMusicales");
 	
 	Element linkGM = doc.createElement("link");
 	linkGM.setAttribute("title", "Grupos Musicales");
 	linkGM.setAttribute("type", "simple");
-	linkGM.setAttribute("href", "/gruposmusicales/");
+	linkGM.setAttribute("href", "gruposmusicales/");
 	gm.appendChild(linkGM);
 	sgaeElt.appendChild(gm);
 	
@@ -61,7 +69,7 @@ public class RootServerResource extends ServerResource{
 	Element linkP = doc.createElement("link");
 	linkP.setAttribute("title", "Personas");
 	linkP.setAttribute("type", "simple");
-	linkP.setAttribute("href", "/personas/");
+	linkP.setAttribute("href", "personas/");
 	personas.appendChild(linkP);
 	sgaeElt.appendChild(personas);
 
@@ -69,10 +77,9 @@ public class RootServerResource extends ServerResource{
 	Element linkD = doc.createElement("link");
 	linkD.setAttribute("title", "Discográficas");
 	linkD.setAttribute("type", "simple");
-	linkD.setAttribute("href", "/discograficas/");
+	linkD.setAttribute("href", "discograficas/");
 	discograficas.appendChild(linkD);
 	sgaeElt.appendChild(discograficas);
 	return result;
 	}
-
 }

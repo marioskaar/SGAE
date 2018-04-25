@@ -11,10 +11,10 @@ public class SGAEServerComponent extends Component{
 		new SGAEServerComponent().start();
 	}
 	public SGAEServerComponent() {
-		setName("SGAE");
-		setDescription("Servidor");
-		setOwner("YO");
-		setAuthor("RACHEl");
+		setName("SGAE server application");
+		setDescription("Proyecto de la asignatura PTPD");
+		setOwner("ptpdx03");
+		setAuthor("Raquel Perez & Mario Calle");
 
 		Server server = new Server(new Context(), Protocol.HTTP, 8111);
 		server.getContext().getParameters().set("tracing", "true");

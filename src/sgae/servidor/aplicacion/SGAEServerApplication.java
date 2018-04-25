@@ -14,15 +14,21 @@ import java.text.ParseException;
 
 public class SGAEServerApplication extends Application{
 
+    //Creacion de los objetos controladores
 	private ControladorPersonas controladorPersonas;
 	private ControladorGruposMusicales controladorGruposMusicales;
+
+	//Constructor de la clase SGAEServerApplication
 	public SGAEServerApplication() {
-		setName("SGAE");
-		setDescription("Servidor");
-		setOwner("YO");
-		setAuthor("RACHEl");
+		setName("SGAE server application");
+		setDescription("Proyecto de la asignatura PTPD");
+		setOwner("ptpdx03");
+		setAuthor("Raquel Perez & Mario Calle");
+		//Instanciacion de los objetos controladores
 		controladorPersonas = new ControladorPersonas();
 		controladorGruposMusicales = new ControladorGruposMusicales(controladorPersonas);
+
+		//Datos para que no este vacia la lista
 		try {
 			controladorPersonas.crearPersona("00000000A", "Bart", "Simpson",
                     "01-04-2003");
@@ -41,12 +47,12 @@ public class SGAEServerApplication extends Application{
 		router.attach("/",RootServerResource.class);
 		router.attach("/personas/",PersonasServerResource.class);
 		router.attach("/personas/{dni}",PersonaServerResource.class);
-		router.attach("/gruposMusicales/",GruposMusicalesServerResource.class);
-//		router.attach("/gruposMusicales/{cif}",gruposMusicalesServerResource.class);
+		router.attach("/gruposmusicales/",GruposMusicalesServerResource.class);
+//		router.attach("/gruposmusicales/{cif}",grupoMusicalServerResource.class);
 //		router.attach("/albumes/",albumesServerResource.class);
-//		router.attach("/albumes/{albumId}",albumesServerResource.class);
+//		router.attach("/albumes/{albumId}",albumServerResource.class);
 //		router.attach("/albumes/pistas/",pistasServerResource.class);
-//		router.attach("/albumes/pistas/{pistaId}",pistasServerResource.class);
+//		router.attach("/albumes/pistas/{pistaId}",pistaServerResource.class);
 		return router;
 	}
 	public ControladorPersonas getControladorPersonas() {
