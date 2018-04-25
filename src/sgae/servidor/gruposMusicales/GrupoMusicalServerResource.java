@@ -49,7 +49,8 @@ public class GrupoMusicalServerResource extends ServerResource{
   		StringBuilder result = new StringBuilder();
   		
   		try{
-  			result.append(controladorGruposMusicales.verGrupoMusical(this.cif));  			
+  			result.append(controladorGruposMusicales.verGrupoMusical(this.cif));
+  			result.append("URI: albumes/\nURI: miembros/");
   		}catch(ExcepcionGruposMusicales a){
   			throw new ResourceException(Status.CLIENT_ERROR_NOT_FOUND);
   		}

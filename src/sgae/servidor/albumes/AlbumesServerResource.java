@@ -1,3 +1,4 @@
+/*
 package sgae.servidor.albumes;
 
 import java.util.HashMap;
@@ -34,7 +35,7 @@ public class AlbumesServerResource extends ServerResource {
 	
 	
 	//Tareas a realizar en la inicializaci�n est�ndar del recurso
-	//con negociaci�n de contenidos
+	//con negociacion de contenidos
 	@Override
 	protected void doInit()throws ResourceException{
 		getVariants().add(new Variant (MediaType.TEXT_PLAIN));
@@ -99,4 +100,4 @@ public class AlbumesServerResource extends ServerResource {
 	}	
 	
 
-}
+}*/
