@@ -1,4 +1,5 @@
 package sgae.servidor.aplicacion;
+import org.restlet.Client;
 import org.restlet.Component;
 import org.restlet.data.Protocol;
 import org.restlet.Context;
@@ -19,6 +20,10 @@ public class SGAEServerComponent extends Component{
 		Server server = new Server(new Context(), Protocol.HTTP, 8111);
 		server.getContext().getParameters().set("tracing", "true");
 		getServers().add(server);
+
+		Client client = new Client(new Context(),Protocol.CLAP);
+		client.getContext().getParameters().set("tracing", "true");
+		getClients().add(client);
 
 		VirtualHost host = getDefaultHost();
 		host.attachDefault(new SGAEServerApplication());

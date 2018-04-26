@@ -54,7 +54,6 @@ public class GrupoMusicalServerResource extends ServerResource{
   		
   		return result.toString();
   	}
-
     //Metodo GET en formato XML
   	@Get("xml")
   	public Representation toXml() {
@@ -65,7 +64,12 @@ public class GrupoMusicalServerResource extends ServerResource{
   			grupoMusicalXML.setCif(this.cif);
   			grupoMusicalXML.setNombre(grupoMusical.getNombre());
   			grupoMusicalXML.setFechaCreacion(grupoMusical.getFechaCreacion());
-  			
+  			Link link1 = new Link();
+  			Link link2 = new Link();
+
+
+  			grupoMusicalXML.setUri1(link1);
+  			grupoMusicalXML.setUri2(link2);
   		
   		}catch(ExcepcionGruposMusicales a){
   			throw new ResourceException(Status.CLIENT_ERROR_NOT_FOUND);

@@ -1,9 +1,8 @@
 <html>
-<head><title> Ejemplo AlbumInfoBreve </title></head>
+<head><title> AlbumInfoBreve </title></head>
 <body>
 	<table>
 		<tbody>
-			#foreach($album in $albumes)
 			<tr>
 				<td>Id Album</td><td>$album.idAlbum</td>
 			</tr>
@@ -16,7 +15,10 @@
 			<tr>
 				<td>Ejemplares vendidos</td><td>$album.ejemplaresVendidos</td>
 			</tr>
-			#end
+			<tr>
+			    <td> Pistas </td>
+			    <td><a href="$album.uri.href">Link</a></td>
+			</tr>
 		</tbody>
 	</table>
 </body>

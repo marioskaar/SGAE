@@ -153,9 +153,9 @@ public class Album {
 	 */
 	String verDescripcionCompleta() {
 		return "Id: " + idAlbum + 
-			"Título: " + titulo +
-			"Fecha de publicación: " + fechaPublicacion +
-			"Ejemplares vendidos: " + ejemplaresVendidos + "\n";
+			" Título: " + titulo +
+			" Fecha de publicación: " + fechaPublicacion +
+			" Ejemplares vendidos: " + ejemplaresVendidos + "\n";
 	}
 	
 	/**

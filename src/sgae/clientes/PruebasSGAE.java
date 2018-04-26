@@ -198,9 +198,13 @@ public class PruebasSGAE {
 		try {
 			// Creación de compañías discográficas
 			System.out.println("Comenzando creación de compañías discográficas...");
-			cd.crearDiscografica("A0123456A", "CBS", "La Casa Blanca");
-			cd.crearDiscografica("B0123456B", "Virgin Records", "Las Vegas");
-			cd.crearDiscografica("C0123456C", "Dro", "Madrid");
+			try {
+				cd.crearDiscografica("A0123456A", "CBS", "La Casa Blanca");
+				cd.crearDiscografica("B0123456B", "Virgin Records", "Las Vegas");
+				cd.crearDiscografica("C0123456C", "Dro", "Madrid");
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
 			System.out.println("Creación de compañías discográficas completada\n");
 
 			// Listado de compañías discográficas
@@ -221,8 +225,12 @@ public class PruebasSGAE {
 			
 			// Modificación de compañías discográficas
 			System.out.println("Comenzando modificación de compañías discográficas...");
-			cd.modificarDiscografica("A0123456A", "CBS", "Springfield");
-			cd.modificarDiscografica("B0123456B", "Virgin Records", "Londres");
+			try {
+				cd.modificarDiscografica("B0123456B", "Virgin Records", "Londres");
+				cd.modificarDiscografica("A0123456A", "CBS", "Springfield");
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
 			System.out.println("Modificación de compañías discográficas completada\n");
 
 			// Visión detallada de compañías discográficas
@@ -260,10 +268,14 @@ public class PruebasSGAE {
 			// Creación de contratos 
 			System.out.println("Comenzando creación de contratos sin partir "+ 
 					"de una oferta...");
-			cd.nuevoContrato("A0123456A", "D0123456D",  
-					"01-01-2017", "01-01-2018", 3000); // A Jamiroquai en la CBS
-			cd.nuevoContrato("C0123456C", "E0123456E",  
-					"01-01-2016", "01-01-2018", 1000);	// A Blur en Dro
+			try {
+				cd.nuevoContrato("A0123456A", "D0123456D",
+                        "01-01-2017", "01-01-2018", 3000); // A Jamiroquai en la CBS
+				cd.nuevoContrato("C0123456C", "E0123456E",
+						"01-01-2016", "01-01-2018", 1000);	// A Blur en Dro
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
 			System.out.println("Creación de contratos completada\n");
 			
 			// Listado de contratos por compañías discográficas
