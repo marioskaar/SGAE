@@ -39,7 +39,8 @@ public class Persona {
 	 *            dd-MM-yyyy
 	 * @throws ParseException
 	 *             si el parámetro <i>fechaNacimiento</i> no tiene el formato
-	 *             dd-MM-yyyy
+	 *             dd-MM-yyyy o si los parámetros dni, nombre o apellidos están vacíos, contienen sólo espacios
+	 *             o son null
 	 */
 	public Persona(String dni, String nombre, String apellidos, String fechaNacimiento) throws ParseException {
 		super();
@@ -79,8 +80,11 @@ public class Persona {
 	 * 
 	 * @param nuevoNombre
 	 *            el nuevo nombre para la persona
+	 * @throws ParseException
+	 *             si el parámetro nuevoNombre está vacío, contiene sólo espacios
+	 *             o es null
 	 */
-	public void setNombre(String nuevoNombre) {
+	public void setNombre(String nuevoNombre) throws ParseException {
 		nombre = Utils.testStringNullOrEmptyOrWhitespaceAndSet(nuevoNombre, "Campo nombre vacío");
 	}
 
@@ -98,8 +102,11 @@ public class Persona {
 	 * 
 	 * @param nuevosApellidos
 	 *            los nuevos apellidos de la persona
+	 * @throws ParseException
+	 *             si el parámetro nuevosApellidos está vacío, contiene sólo espacios
+	 *             o es null
 	 */
-	public void setApellidos(String nuevosApellidos) {
+	public void setApellidos(String nuevosApellidos) throws ParseException {
 		apellidos = Utils.testStringNullOrEmptyOrWhitespaceAndSet(nuevosApellidos, "Campo apellidos vacío");
 	}
 

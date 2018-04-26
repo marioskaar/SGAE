@@ -1,5 +1,6 @@
 package sgae.nucleo.discograficas;
 
+import java.text.ParseException;
 import java.util.List;
 import sgae.nucleo.personas.Persona;
 
@@ -23,8 +24,9 @@ public interface InterfazControladorDiscograficas {
 	 * @throws ExcepcionDiscograficas
 	 *             si ya existe una discográfica con un CIF igual al valor del
 	 *             parámetro <i>cif</i>
+	 * @throws ParseException si los parámetros cif, nombre o dirección están vacíos, contienen sólo espacios o son el puntero null
 	 */
-	void crearDiscografica(String cif, String nombre, String direccion) throws ExcepcionDiscograficas;
+	void crearDiscografica(String cif, String nombre, String direccion) throws ExcepcionDiscograficas, ParseException;
 
 	/**
 	 * Método que permite modificar una discográfica, recibiendo todos los
@@ -39,8 +41,9 @@ public interface InterfazControladorDiscograficas {
 	 * @throws ExcepcionDiscograficas
 	 *             si no existe una discográfica con un CIF igual al valor del
 	 *             parámetro <i>cif</i>
+	 * @throws ParseException si los parámetros cif, nombre o dirección están vacíos, contienen sólo espacios o son el puntero null
 	 */
-	void modificarDiscografica(String cif, String nombre, String direccion) throws ExcepcionDiscograficas;
+	void modificarDiscografica(String cif, String nombre, String direccion) throws ExcepcionDiscograficas, ParseException;
 
 	/**
 	 * Método que devuelve una lista de discográficas, con su descripción breve
@@ -139,7 +142,7 @@ public interface InterfazControladorDiscograficas {
 	 *             <i>cifDiscografica</i> no existe
 	 */
 	String nuevoContrato(String cifDiscografica, String cifGrupoMusical, String fechaInicio, String fechaFin,
-			float sueldo) throws ExcepcionContratos;
+			float sueldo) throws ExcepcionContratos, ParseException;
 
 	/**
 	 * Método que permite terminar un contrato de una discográfica

@@ -41,6 +41,8 @@ public class Album {
 	 * @param ejemplaresVendidos número de ejempares vendidos del álbum
 	 * @throws ParseException si el parámetro <i>fechaPublicacion</i> no tiene 
 	 * el formato dd-MM-yyyy
+	 * o si los parámetros idAlbum o titulo están vacíos, contienen sólo espacios
+	 * o son null, o si el número de ejemplares vendidos es negativo
 	 */
 	public Album(String idAlbum, String titulo, String fechaPublicacion, int ejemplaresVendidos) 
 		throws ParseException {
@@ -54,6 +56,9 @@ public class Album {
 			throw new ParseException("Campo fecha de publicación vacío", 0);
 		}
 		this.fechaPublicacion = dateFormat.parse(fechaPublicacion);
+		if (ejemplaresVendidos < 0) {
+			throw new ParseException("El número de ejemplares vendidos no puede ser negativo", 0);
+		}
 		this.ejemplaresVendidos = ejemplaresVendidos;
 		// Inicializa una lista de pistas vacía y el contador de pistas
 		listaPistas = new HashMap<String,Pista>();
@@ -80,8 +85,11 @@ public class Album {
 	/**
 	 * Método que modifica el título.
 	 * @param nuevoTitulo el nuevo título del nombre
+	 * @throws ParseException
+	 *             si el parámetro nuevoTitulo está vacío, contiene sólo espacios
+	 *             o es null
 	 */
-	public void setTitulo(String nuevoTitulo) {
+	public void setTitulo(String nuevoTitulo) throws ParseException {
 		titulo = Utils.testStringNullOrEmptyOrWhitespaceAndSet(nuevoTitulo, "Campo título vacío");
 	}
 	
@@ -120,8 +128,12 @@ public class Album {
 	/**
 	 * Método que cambia el número de ejemplares vendidos del álbum.
 	 * @param nuevosEjemplaresVendidos el nuevo valor de los ejemplares vendidos
+	 * @throws ParseException si el número de ejemplares vendidos es negativo
 	 */
-	public void setEjemplaresVendidos(int nuevosEjemplaresVendidos) {
+	public void setEjemplaresVendidos(int nuevosEjemplaresVendidos) throws ParseException {
+		if (ejemplaresVendidos < 0) {
+			throw new ParseException("El número de ejemplares vendidos no puede ser negativo", 0);
+		}
 		ejemplaresVendidos = nuevosEjemplaresVendidos;
 	}
 	
@@ -151,13 +163,21 @@ public class Album {
 	 * @param nombre nombre de la pista a añadir
 	 * @param duracion duración de la pista a añadir
 	 * @return el identificador único de la pista añadira al álbum
+	 * @throws ExcepcionPistas si los parámetros usados para la creación de la pista
+	 * no son correctos
+	 * @see sgae.nucleo.gruposMusicales.Pista
 	 */
-	public String anadirPista(String nombre, int duracion) {
+	public String anadirPista(String nombre, int duracion) throws ExcepcionPistas {
 		// Crea un identificador para la pista, formado por una 'p' y un 
 		// número auto-incrementado
 		String idPista = "p" + ultimaPista;
 		// Crea el objeto
-		Pista p = new Pista(idPista, nombre, duracion);
+		Pista p = null;
+		try {
+			p = new Pista(idPista, nombre, duracion);
+		} catch (ParseException e) {
+			throw new ExcepcionPistas(idPista, e.getLocalizedMessage());
+		}
 		// Colecciona el objeto indexado por el identificador
 		listaPistas.put(idPista, p);
 		// Incrementa el contador
@@ -195,7 +215,7 @@ public class Album {
 		// Recorre la lista de pistas
 		for(Pista p : listaPistas.values()) {
 			// Y a cada una le pide los detalles
-			listado.add(p.verDescripcionCompleta());
+			listado.add(p.verDescripcionBreve());
 		}
 		return listado;
 	}

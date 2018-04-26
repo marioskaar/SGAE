@@ -382,9 +382,11 @@ public class ControladorGruposMusicales {
 	 * identificador igual al parámetro <i>idAlbum</i>
 	 * @throws ExcepcionGruposMusicales si no existe un grupo musical con un CIF
 	 * igual al valor del parámetro <i>cif</i>
+	 * @throws ExcepcionPistas si los parámetros para la creación de la pista no son correctos
+	 * @see sgae.nucleo.gruposMusicales.Pista
 	 */
 	public String anadirPista(String cif, String idAlbum, String nombre, int duracion) 
-		throws ExcepcionAlbumes, ExcepcionGruposMusicales {
+		throws ExcepcionAlbumes, ExcepcionGruposMusicales, ExcepcionPistas {
 		return comprobarGrupoMusicalExiste(cif).anadirPista(idAlbum,
 									  nombre, duracion);
 	}

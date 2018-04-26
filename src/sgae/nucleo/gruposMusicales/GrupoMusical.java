@@ -48,7 +48,7 @@ public class GrupoMusical {
 	 * @param nombre el nombre del grupo
 	 * @param fechaCreacion fecha de creación del grupo
 	 * @throws ParseException si el parámetro <i>fechaCreacion</i> no tiene 
-	 * el formato dd-MM-yyyy
+	 * el formato dd-MM-yyyy o si los parámetros cif o nombre están vacíos, contienen sólo espacios o son el puntero null
 	 */
 	public GrupoMusical(String cif, String nombre, String fechaCreacion)
 		throws ParseException {
@@ -89,8 +89,10 @@ public class GrupoMusical {
 	/**
 	 * Método que permite cambiar el nombre.
 	 * @param nombre el nuevo nombre del grupo musical
+	 * @throws ParseException si el parámetro nombre está vacío, contiene sólo espacios
+	 * o es null
 	 */
- 	public void setNombre(String nombre) {
+ 	public void setNombre(String nombre) throws ParseException {
 		this.nombre = Utils.testStringNullOrEmptyOrWhitespaceAndSet(nombre, "Campo nombre vacío");
 	}
 
@@ -386,12 +388,11 @@ public class GrupoMusical {
 	 * @throws ExcepcionAlbumes
 	 *             si no existe un álbum con un valor de idAlbum igual al
 	 *             parámetro <i>idAlbum</i>
-	 * @throws ExcepcionAlbumes
-	 *             si no existe un álbum con un valor de identificador igual al
-	 *             parámetro <i>idAlbum</i>
+	 * @throws ExcepcionPistas si los parámetros de creación de la pista no son correctos
+	 * @see sgae.nucleo.gruposMusicales.Pista
 	 */
 	public String anadirPista(String idAlbum, String nombre, int duracion)
-		throws ExcepcionAlbumes {
+		throws ExcepcionAlbumes, ExcepcionPistas {
 		// Recupera la instancia de Album
 		Album a = comprobarAlbumExiste(idAlbum);
 		return a.anadirPista(nombre, duracion);

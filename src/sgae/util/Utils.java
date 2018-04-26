@@ -1,10 +1,15 @@
 package sgae.util;
 
-import com.sun.org.apache.xerces.internal.impl.xpath.regex.ParseException;
+import java.text.ParseException;
 
 public class Utils {
 	// From
 	// https://codereview.stackexchange.com/questions/69827/isnullorwhitespace-check-for-java
+	/**
+	 * Función que comprueba si una cadena está vacía, contiene sólo espacios o es un puntero null
+	 * @param value cadena a comprobar
+	 * @return true si la cadena está vacía, contiene sólo espacios o es un puntero null
+	 */
 	public static boolean isStringNullOrEmptyOrWhitespace(CharSequence value) {
 		if (value == null) {
 			return true;
@@ -32,6 +37,14 @@ public class Utils {
 		return true;
 	}
 
+	/**
+	 * Función que comprueba si una cadena está vacía, contiene sólo espacios o es un puntero null y lanza 
+	 * una excepción ParseExeption en este caso (en caso contrario, devuelve elmismo valor de entrada)
+	 * @param value cadena de texto a comprobar
+	 * @param errorMsg cadena con el mensaje específico de error que se asociará a la excepción ParseException
+	 * @return el valor de la cadena de entrada si contiene algún caracter distinto de espacio, tabulador o retorno de línea
+	 * @throws ParseException si la cadena contenida en el parámetro <i>value</i>está vacía, contiene sólo espacios o es un puntero null
+	 */
 	public static String testStringNullOrEmptyOrWhitespaceAndSet(String value, String errorMsg) throws ParseException {
 		if (isStringNullOrEmptyOrWhitespace(value)) {
 			throw new ParseException(errorMsg, 0);

@@ -1,5 +1,6 @@
 package sgae.nucleo.discograficas;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -60,8 +61,9 @@ public class Discografica {
 	 *            el nombre comercial
 	 * @param direccion
 	 *            la dirección de la discografica
+	 * @throws ParseException si los parámetros cif, nombre o dirección están vacíos, contienen sólo espacios o son el puntero null
 	 */
-	public Discografica(String cif, String nombre, String direccion) {
+	public Discografica(String cif, String nombre, String direccion) throws ParseException {
 		super();
 		// Asigna campos básicos
 		this.cif = Utils.testStringNullOrEmptyOrWhitespaceAndSet(cif, "Campo CIF vacío");
@@ -98,8 +100,9 @@ public class Discografica {
 	 * 
 	 * @param nuevoNombre
 	 *            el nuevo nombre de la discografica
+	 * @throws ParseException si el parámetro nuevoNombre está vacío, contiene sólo espacios o es el puntero null
 	 */
-	public void setNombre(String nuevoNombre) {
+	public void setNombre(String nuevoNombre) throws ParseException {
 		this.nombre = Utils.testStringNullOrEmptyOrWhitespaceAndSet(nuevoNombre, "Campo nombre vacío");
 	}
 
@@ -117,8 +120,9 @@ public class Discografica {
 	 * 
 	 * @param nuevaDireccion
 	 *            la nueva dirección de la discografica
+	 * @throws ParseException si el parámetro nuevaDireccion está vacío, contiene sólo espacios o es el puntero null
 	 */
-	public void setDireccion(String nuevaDireccion) {
+	public void setDireccion(String nuevaDireccion) throws ParseException {
 		this.direccion = Utils.testStringNullOrEmptyOrWhitespaceAndSet(nuevaDireccion, "Campo dirección vacío");
 	}
 
@@ -163,7 +167,7 @@ public class Discografica {
 	}
 
 	public String nuevoContrato(GrupoMusical grupoMusical, String fechaInicicio, String fechaFin, float sueldo)
-			throws ExcepcionContratos {
+			throws ExcepcionContratos, ParseException {
 		// Genera un identificador único de contrato
 		String idContrato = "c" + ultimoContrato;
 		// Crea la instancia

@@ -44,12 +44,14 @@ public class SGAEServerApplication extends Application{
 		try{
 			controladorGruposMusicales.crearGrupoMusical("aaaaaaaa", "aaaaaasdasdasd", "01-02-1994");
 			controladorGruposMusicales.crearGrupoMusical("aaaabbbbaaaa", "bb", "11-11-1111");
-
+			controladorGruposMusicales.crearAlbum("aaaaaaaa","holiso","01-11-2222",8000);
+			controladorGruposMusicales.crearAlbum("aaaaaaaa","holisosadad","11-01-2222",8000);
 		}catch(ParseException a){
 			
 		}catch(ExcepcionGruposMusicales a){
 			
 		}
+
 	}
 	
 	@Override
@@ -60,7 +62,7 @@ public class SGAEServerApplication extends Application{
 		router.attach("/personas/{dni}",PersonaServerResource.class);
 		router.attach("/gruposmusicales/",GruposMusicalesServerResource.class);
 		router.attach("/gruposmusicales/{cif}",GrupoMusicalServerResource.class);
-//		router.attach("/gruposmusicales/{cif}/albumes/",AlbumesServerResource.class);
+		router.attach("/gruposmusicales/{cif}/albumes/",AlbumesServerResource.class);
 		router.attach("/gruposmusicales/{cif}/albumes/{albumId}",AlbumServerResource.class);
 		router.attach("/gruposmusicales/{cif}/albumes/pistas/",PistasServerResource.class);
 		router.attach("/gruposmusicales/{cif}/albumes/pistas/{pistaId}",PistaServerResource.class);

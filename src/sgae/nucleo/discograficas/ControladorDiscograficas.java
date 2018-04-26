@@ -1,5 +1,6 @@
 package sgae.nucleo.discograficas;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -39,7 +40,7 @@ public class ControladorDiscograficas implements InterfazControladorDiscografica
 	 * @see sgae.nucleo.discograficas.InterfazControladorDiscograficas#crearDiscografica(java.lang.String, java.lang.String, java.lang.String)
 	 */
 	@Override
-	public void crearDiscografica(String cif, String nombre, String direccion) throws ExcepcionDiscograficas {
+	public void crearDiscografica(String cif, String nombre, String direccion) throws ExcepcionDiscograficas, ParseException {
 		// Comprueba si no existe ya
 		if (listaDiscograficas.containsKey(cif) == false) {
 			// Crea la instancia
@@ -55,7 +56,7 @@ public class ControladorDiscograficas implements InterfazControladorDiscografica
 	 * @see sgae.nucleo.discograficas.InterfazControladorDiscograficas#modificarDiscografica(java.lang.String, java.lang.String, java.lang.String)
 	 */
 	@Override
-	public void modificarDiscografica(String cif, String nombre, String direccion) throws ExcepcionDiscograficas {
+	public void modificarDiscografica(String cif, String nombre, String direccion) throws ExcepcionDiscograficas, ParseException {
 		// Recupera la instancia
 		Discografica d = listaDiscograficas.get(cif);
 		if (d != null) {
@@ -198,7 +199,7 @@ public class ControladorDiscograficas implements InterfazControladorDiscografica
 	 */
 	@Override
 	public String nuevoContrato(String cifDiscografica, String cifGrupoMusical, String fechaInicio, String fechaFin,
-			float sueldo) throws ExcepcionContratos {
+			float sueldo) throws ExcepcionContratos, ParseException {
 		try {
 			// Recupera la instancia de grupo musical
 			GrupoMusical grupoMusical = cgm.recuperarGrupoMusical(cifGrupoMusical);
