@@ -5,10 +5,7 @@ import org.restlet.data.Form;
 import org.restlet.data.Status;
 import org.restlet.ext.jaxb.JaxbRepresentation;
 import org.restlet.representation.Representation;
-import org.restlet.resource.Get;
-import org.restlet.resource.Put;
-import org.restlet.resource.ResourceException;
-import org.restlet.resource.ServerResource;
+import org.restlet.resource.*;
 import org.restlet.ext.jaxb.JaxbRepresentation;
 import org.restlet.representation.Representation;
 import org.restlet.resource.Get;
@@ -79,21 +76,41 @@ public class GrupoMusicalServerResource extends ServerResource{
   		return result;
   	}
     
-//    @Put("form-data")
-//    public String store(Representation data) {
-//  		StringBuilder result = new StringBuilder();
-//    	Form form = new Form(data);
-//    	
-//    	try{
-//    		controladorPersonas.crearPersona(this.dni, form.getFirstValue("nombre"),
-//    				form.getFirstValue("apellidos"), form.getFirstValue("fechaNacimiento"));
-//    		result.append("Persona Creada\n"+ controladorPersonas.verPersona(this.dni));
-//    		getResponse().setStatus(Status.SUCCESS_OK);
-//    		return result.toString();
-//    	}catch(ParseException a){
-//    		throw new ResourceException(Status.CLIENT_ERROR_BAD_REQUEST);
-//    	}catch(ExcepcionPersonas a){
-//    		throw new ResourceException(Status.CLIENT_ERROR_BAD_REQUEST);
-//    	}
-//    }
+    @Put("form-data")
+    public String store(Representation data) {
+  		StringBuilder result = new StringBuilder();
+    	Form form = new Form(data);
+
+    	try{
+			controladorGruposMusicales.crearGrupoMusical(this.cif,form.getFirstValue("nombre"),
+					form.getFirstValue("fechaCreacion"));
+    		result.append("Grupo Musical Creado\n"+ controladorGruposMusicales.verGrupoMusical(this.cif));
+    		getResponse().setStatus(Status.SUCCESS_OK);
+    	}catch(ParseException a){
+    		throw new ResourceException(Status.CLIENT_ERROR_BAD_REQUEST);
+    	}catch(ExcepcionGruposMusicales a){
+    		try{
+				controladorGruposMusicales.modificarGrupoMusical(this.cif,form.getFirstValue("nombre"),
+						form.getFirstValue("fechaCreacion"));
+				result.append("Grupo Musical Modificado\n"+ controladorGruposMusicales.verGrupoMusical(this.cif));
+			}catch (ParseException aa){
+				throw new ResourceException(Status.CLIENT_ERROR_BAD_REQUEST);
+			}catch (ExcepcionGruposMusicales aa){
+				throw new ResourceException(Status.CLIENT_ERROR_NOT_FOUND);
+			}
+    	}
+    	return result.toString();
+    }
+
+    @Delete
+	public String remove(){
+  		String result;
+  		try{
+  			controladorGruposMusicales.borrarGrupoMusical(this.cif);
+  			result = "Se ha borrado el grupo musical con CIF: "+this.cif;
+		}catch (ExcepcionGruposMusicales a){
+			throw new ResourceException(Status.CLIENT_ERROR_NOT_FOUND);
+		}
+  		return result;
+	}
 }
