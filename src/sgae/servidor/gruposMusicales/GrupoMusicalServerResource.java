@@ -66,7 +66,12 @@ public class GrupoMusicalServerResource extends ServerResource{
   			grupoMusicalXML.setFechaCreacion(grupoMusical.getFechaCreacion());
   			Link link1 = new Link();
   			Link link2 = new Link();
-
+			link1.setHref("miembros/");
+			link1.setTitle("Miembros");
+			link1.setType("simple");
+			link2.setHref("albumes/");
+			link2.setTitle("Albumes");
+			link2.setType("simple");
 
   			grupoMusicalXML.setUri1(link1);
   			grupoMusicalXML.setUri2(link2);
@@ -75,7 +80,7 @@ public class GrupoMusicalServerResource extends ServerResource{
   			throw new ResourceException(Status.CLIENT_ERROR_NOT_FOUND);
   		}
   		
-  		JaxbRepresentation<	GrupoMusical> result = new JaxbRepresentation<GrupoMusical>(grupoMusicalXML);
+  		JaxbRepresentation<GrupoMusical> result = new JaxbRepresentation<GrupoMusical>(grupoMusicalXML);
   		result.setFormattedOutput(true);
   		return result;
   	}

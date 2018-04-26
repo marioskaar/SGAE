@@ -1,4 +1,5 @@
 package sgae.servidor.albumes;
+import org.restlet.data.Form;
 import org.restlet.data.LocalReference;
 import org.restlet.data.MediaType;
 import org.restlet.data.Status;
@@ -6,10 +7,7 @@ import org.restlet.ext.velocity.TemplateRepresentation;
 import org.restlet.representation.Representation;
 import org.restlet.representation.StringRepresentation;
 import org.restlet.representation.Variant;
-import org.restlet.resource.ClientResource;
-import org.restlet.resource.Put;
-import org.restlet.resource.ResourceException;
-import org.restlet.resource.ServerResource;
+import org.restlet.resource.*;
 import sgae.nucleo.gruposMusicales.ControladorGruposMusicales;
 import sgae.nucleo.gruposMusicales.ExcepcionAlbumes;
 import sgae.nucleo.gruposMusicales.ExcepcionGruposMusicales;
@@ -18,6 +16,7 @@ import sgae.util.generated.Album;
 import sgae.util.generated.Link;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -33,7 +32,8 @@ public class AlbumServerResource extends ServerResource{
     @Override
     protected void doInit()throws ResourceException {
         getVariants().add(new Variant(MediaType.TEXT_PLAIN));
-        getVariants().add(new Variant (MediaType.TEXT_HTML));
+        getVariants().add(new Variant(MediaType.TEXT_HTML));
+        getVariants().add(new Variant(MediaType.APPLICATION_WWW_FORM));
         this.cif = getAttribute("cif");
         this.idAlbum = getAttribute("albumId");
     }
@@ -90,5 +90,39 @@ public class AlbumServerResource extends ServerResource{
         }
         return result;
     }
+    @Override
+    public Representation delete(Variant variant){
+        Representation result = null;
+        try{
+            controladorGruposMusicales.borrarAlbum(this.cif,this.idAlbum);
+            result = new StringRepresentation("Se ha borrado el album con ID:"+this.idAlbum);
+        }catch(ExcepcionAlbumes a){
+            throw new ResourceException(Status.CLIENT_ERROR_BAD_REQUEST);
+        }
+        catch(ExcepcionGruposMusicales a){
+            throw new ResourceException(Status.CLIENT_ERROR_NOT_FOUND);
+        }
+        return result;
+    }
 
+    @Override
+    public Representation put(Representation data, Variant variant){
+        Representation result = null;
+
+        if (MediaType.APPLICATION_WWW_FORM.isCompatible(variant.getMediaType())) {
+            Form form = new Form(data);
+            try {
+                controladorGruposMusicales.modificarAlbum(this.cif,this.idAlbum,form.getFirstValue("titulo"),
+                        form.getFirstValue("fechaPublicacion"),Integer.parseInt(form.getFirstValue("ejemplaresVendidos")));
+                result = new StringRepresentation("Album modificado: " + controladorGruposMusicales.verAlbum(this.cif,this.idAlbum));
+            }catch (ParseException a){
+                throw new ResourceException(Status.CLIENT_ERROR_BAD_REQUEST);
+            }catch(ExcepcionAlbumes a){
+                throw new ResourceException(Status.CLIENT_ERROR_NOT_FOUND);
+            } catch(ExcepcionGruposMusicales a){
+                throw new ResourceException(Status.CLIENT_ERROR_NOT_FOUND);
+            }
+        }
+        return  result;
+    }
 }
