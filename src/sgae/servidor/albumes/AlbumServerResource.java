@@ -50,9 +50,8 @@ public class AlbumServerResource extends ServerResource{
         if(MediaType.TEXT_PLAIN.isCompatible(variant.getMediaType())){
             try{
                 StringBuilder result1 = new StringBuilder();
-                result1.append(controladorGruposMusicales.verAlbum(cif,idAlbum));
+                result1.append(controladorGruposMusicales.verAlbum(cif,idAlbum)+"URI: pistas/");
                 result = new StringRepresentation(result1.toString());
-                return result;
             }catch(ExcepcionAlbumes a){
                 throw new ResourceException(Status.CLIENT_ERROR_NOT_FOUND);
             }

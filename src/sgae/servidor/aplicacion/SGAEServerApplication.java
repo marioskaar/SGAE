@@ -74,5 +74,4 @@ public class SGAEServerApplication extends Application{
 	public ControladorGruposMusicales getControladorGruposMusicales() {
 		return controladorGruposMusicales;
 	}
-
 }

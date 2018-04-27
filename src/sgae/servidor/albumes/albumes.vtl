@@ -1,22 +1,18 @@
 <html>
-<head><title> Ejemplo AlbumInfoBreve </title></head>
+<head><title> Lista de albumes(Info Breve) </title></head>
 <body>
 	<table>
 		<tbody>
-			#foreach($album in $albumes)
+#foreach($a in $albumes)
 			<tr>
-				<td>Id Album</td><td>$album.idAlbum</td>
+				<td>Titulo</td>
+				<td>$a.titulo</td>
 			</tr>
 			<tr>
-				<td>Titulo</td><td>$album.titulo</td>
-			</tr>
-			<tr>
-				<td>Fecha de publicacion</td><td>$album.fechaPublicacion</td>
-			</tr>
-			<tr>
-				<td>Ejemplares vendidos</td><td>$album.ejemplaresVendidos</td>
-			</tr>
-			#end
+			    <td>URI album:</td>
+			    <td><a href="$a.uri.href">Link</a></td>
+    		</tr>
+#end
 		</tbody>
 	</table>
 </body>
