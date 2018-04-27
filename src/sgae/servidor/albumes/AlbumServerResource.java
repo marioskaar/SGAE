@@ -38,12 +38,6 @@ public class AlbumServerResource extends ServerResource{
         this.idAlbum = getAttribute("albumId");
     }
 
-    //Tareas a realizar en la liberacion estandar del recurso
-    @Override
-    protected void doRelease() throws ResourceException{
-        System.out.println("The grupos musicales resource was release");
-    }
-
     @Override
     protected Representation get(Variant variant)throws ResourceException{
         Representation result = null;
@@ -53,10 +47,10 @@ public class AlbumServerResource extends ServerResource{
                 result1.append(controladorGruposMusicales.verAlbum(cif,idAlbum)+"URI: pistas/");
                 result = new StringRepresentation(result1.toString());
             }catch(ExcepcionAlbumes a){
-                throw new ResourceException(Status.CLIENT_ERROR_NOT_FOUND);
+                throw new ResourceException(Status.CLIENT_ERROR_BAD_REQUEST);
             }
             catch(ExcepcionGruposMusicales e){
-                throw new ResourceException(Status.CLIENT_ERROR_NOT_FOUND);
+                throw new ResourceException(Status.CLIENT_ERROR_BAD_REQUEST);
             }
         }else if(MediaType.TEXT_HTML.isCompatible(variant.getMediaType())){
             Album albumHTML = new Album();
@@ -79,10 +73,10 @@ public class AlbumServerResource extends ServerResource{
                 Representation result2 = new TemplateRepresentation(albumVtl,dataModel,MediaType.TEXT_HTML);
                 return result2;
             }catch(ExcepcionAlbumes a){
-                throw new ResourceException(Status.CLIENT_ERROR_NOT_FOUND);
+                throw new ResourceException(Status.CLIENT_ERROR_BAD_REQUEST);
             }
             catch(ExcepcionGruposMusicales e){
-                throw new ResourceException(Status.CLIENT_ERROR_NOT_FOUND);
+                throw new ResourceException(Status.CLIENT_ERROR_BAD_REQUEST);
             }catch (IOException io){
                 throw  new ResourceException(Status.SERVER_ERROR_INTERNAL);
             }
@@ -99,7 +93,7 @@ public class AlbumServerResource extends ServerResource{
             throw new ResourceException(Status.CLIENT_ERROR_BAD_REQUEST);
         }
         catch(ExcepcionGruposMusicales a){
-            throw new ResourceException(Status.CLIENT_ERROR_NOT_FOUND);
+            throw new ResourceException(Status.CLIENT_ERROR_BAD_REQUEST);
         }
         return result;
     }
@@ -117,9 +111,9 @@ public class AlbumServerResource extends ServerResource{
             }catch (ParseException a){
                 throw new ResourceException(Status.CLIENT_ERROR_BAD_REQUEST);
             }catch(ExcepcionAlbumes a){
-                throw new ResourceException(Status.CLIENT_ERROR_NOT_FOUND);
+                throw new ResourceException(Status.CLIENT_ERROR_BAD_REQUEST);
             } catch(ExcepcionGruposMusicales a){
-                throw new ResourceException(Status.CLIENT_ERROR_NOT_FOUND);
+                throw new ResourceException(Status.CLIENT_ERROR_BAD_REQUEST);
             }
         }
         return  result;

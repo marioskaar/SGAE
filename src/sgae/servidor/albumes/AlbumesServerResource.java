@@ -43,12 +43,6 @@ public class AlbumesServerResource extends ServerResource {
 		this.cif = getAttribute("cif");
 	}
 
-	//Tareas a realizar en la liberacion estandar del recurso
-	@Override
-	protected void doRelease() throws ResourceException{
-		System.out.println("The grupos musicales resource was release");
-	}
-
 	@Override
 	protected Representation get(Variant variant)throws ResourceException{
 		Representation result = null;
@@ -61,7 +55,7 @@ public class AlbumesServerResource extends ServerResource {
 				}
 				result = new StringRepresentation(result2.toString());
 			}catch(ExcepcionGruposMusicales e){
-				throw new ResourceException(Status.CLIENT_ERROR_NOT_FOUND);
+				throw new ResourceException(Status.CLIENT_ERROR_BAD_REQUEST);
 			}
 		}else if(MediaType.TEXT_HTML.isCompatible(variant.getMediaType())){
 
@@ -86,7 +80,7 @@ public class AlbumesServerResource extends ServerResource {
 				result = new TemplateRepresentation(albumVtl,albumDataModel,MediaType.TEXT_HTML);
 				return result;
 			}catch(ExcepcionGruposMusicales e){
-				throw new ResourceException(Status.CLIENT_ERROR_NOT_FOUND);
+				throw new ResourceException(Status.CLIENT_ERROR_BAD_REQUEST);
 			} catch (IOException e) {
 				throw new ResourceException(Status.SERVER_ERROR_INTERNAL);
 			}
@@ -107,7 +101,7 @@ public class AlbumesServerResource extends ServerResource {
 			}catch (ParseException a){
 				throw new ResourceException(Status.CLIENT_ERROR_BAD_REQUEST);
 			} catch(ExcepcionGruposMusicales a){
-				throw new ResourceException(Status.CLIENT_ERROR_NOT_FOUND);
+				throw new ResourceException(Status.CLIENT_ERROR_BAD_REQUEST);
 			}
 		}
 		return  result;

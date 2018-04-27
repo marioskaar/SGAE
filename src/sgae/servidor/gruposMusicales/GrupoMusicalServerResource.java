@@ -34,12 +34,6 @@ public class GrupoMusicalServerResource extends ServerResource{
   		System.out.println("The grupo musical resource was initialized");
   	}
 
-    //Tareas a realizar en la liberacion estandar del recurso
-  	@Override
-  	protected void doRelease() throws ResourceException{
-  		System.out.println("The grupo musical resource was release");
-  	}
-
     //Metodo GET en texto plano
   	@Get("txt")
   	public String represent() {
@@ -49,7 +43,7 @@ public class GrupoMusicalServerResource extends ServerResource{
   			result.append(controladorGruposMusicales.verGrupoMusical(this.cif));
   			result.append("URI: albumes/\nURI: miembros/");
   		}catch(ExcepcionGruposMusicales a){
-  			throw new ResourceException(Status.CLIENT_ERROR_NOT_FOUND);
+  			throw new ResourceException(Status.CLIENT_ERROR_BAD_REQUEST);
   		}
   		
   		return result.toString();
@@ -77,7 +71,7 @@ public class GrupoMusicalServerResource extends ServerResource{
   			grupoMusicalXML.setUri2(link2);
   		
   		}catch(ExcepcionGruposMusicales a){
-  			throw new ResourceException(Status.CLIENT_ERROR_NOT_FOUND);
+  			throw new ResourceException(Status.CLIENT_ERROR_BAD_REQUEST);
   		}
   		
   		JaxbRepresentation<GrupoMusical> result = new JaxbRepresentation<GrupoMusical>(grupoMusicalXML);
@@ -105,7 +99,7 @@ public class GrupoMusicalServerResource extends ServerResource{
 			}catch (ParseException aa){
 				throw new ResourceException(Status.CLIENT_ERROR_BAD_REQUEST);
 			}catch (ExcepcionGruposMusicales aa){
-				throw new ResourceException(Status.CLIENT_ERROR_NOT_FOUND);
+				throw new ResourceException(Status.CLIENT_ERROR_BAD_REQUEST);
 			}
     	}
     	return result.toString();
@@ -118,7 +112,7 @@ public class GrupoMusicalServerResource extends ServerResource{
   			controladorGruposMusicales.borrarGrupoMusical(this.cif);
   			result = "Se ha borrado el grupo musical con CIF: "+this.cif;
 		}catch (ExcepcionGruposMusicales a){
-			throw new ResourceException(Status.CLIENT_ERROR_NOT_FOUND);
+			throw new ResourceException(Status.CLIENT_ERROR_BAD_REQUEST);
 		}
   		return result;
 	}

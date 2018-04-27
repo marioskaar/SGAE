@@ -1,0 +1,19 @@
+<html>
+<head><title> Lista de pistas(Info Breve) </title></head>
+<body>
+	<table>
+		<tbody>
+#foreach($p in $pistas)
+			<tr>
+				<td>Nombre</td>
+				<td>$p.nombre</td>
+			</tr>
+			<tr>
+			    <td>URI pista:</td>
+			    <td><a href="$p.uri.href">Link</a></td>
+    		</tr>
+#end
+		</tbody>
+	</table>
+</body>
+</html>

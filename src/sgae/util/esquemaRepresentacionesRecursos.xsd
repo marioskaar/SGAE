@@ -124,9 +124,7 @@
 	<xs:element name="PistaInfoBreve">
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element name="idPista" type="xs:string"/>
 				<xs:element name="nombre" type="xs:string"/>
-				<xs:element name="duracion" type="xs:int"/>
 				<xs:element name="uri" type ="sgaerestutillink:link"/>
 			</xs:sequence>
 		</xs:complexType>

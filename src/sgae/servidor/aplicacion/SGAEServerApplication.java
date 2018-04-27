@@ -4,7 +4,9 @@ import org.restlet.Restlet;
 import org.restlet.routing.Router;
 
 import sgae.nucleo.gruposMusicales.ControladorGruposMusicales;
+import sgae.nucleo.gruposMusicales.ExcepcionAlbumes;
 import sgae.nucleo.gruposMusicales.ExcepcionGruposMusicales;
+import sgae.nucleo.gruposMusicales.ExcepcionPistas;
 import sgae.nucleo.personas.ControladorPersonas;
 import sgae.nucleo.personas.ExcepcionPersonas;
 import sgae.servidor.gruposMusicales.*;
@@ -51,6 +53,16 @@ public class SGAEServerApplication extends Application{
 		}catch(ExcepcionGruposMusicales a){
 			
 		}
+		try{
+			controladorGruposMusicales.anadirPista("aaaaaaaa","a0","Pista1",2);
+			controladorGruposMusicales.anadirPista("aaaaaaaa","a0","Pista3",3);
+		} catch (ExcepcionPistas excepcionPistas) {
+			excepcionPistas.printStackTrace();
+		} catch (ExcepcionGruposMusicales excepcionGruposMusicales) {
+			excepcionGruposMusicales.printStackTrace();
+		} catch (ExcepcionAlbumes excepcionAlbumes) {
+			excepcionAlbumes.printStackTrace();
+		}
 
 	}
 	
@@ -64,8 +76,8 @@ public class SGAEServerApplication extends Application{
 		router.attach("/gruposmusicales/{cif}",GrupoMusicalServerResource.class);
 		router.attach("/gruposmusicales/{cif}/albumes/",AlbumesServerResource.class);
 		router.attach("/gruposmusicales/{cif}/albumes/{albumId}",AlbumServerResource.class);
-		router.attach("/gruposmusicales/{cif}/albumes/pistas/",PistasServerResource.class);
-		router.attach("/gruposmusicales/{cif}/albumes/pistas/{pistaId}",PistaServerResource.class);
+		router.attach("/gruposmusicales/{cif}/albumes/{albumId}/pistas/",PistasServerResource.class);
+		router.attach("/gruposmusicales/{cif}/albumes/{albumId}/pistas/{pistaId}",PistaServerResource.class);
 		return router;
 	}
 	public ControladorPersonas getControladorPersonas() {
