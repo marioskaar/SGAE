@@ -37,6 +37,10 @@ public class SGAEServerApplication extends Application{
                     "01-04-2003");
 			controladorPersonas.crearPersona("11111111B", "Lisa", "Simpson",
 					"02-02-2005");
+			controladorPersonas.crearPersona("11111111c", "LisaS", "Simpson",
+					"02-02-2005");
+			controladorPersonas.crearPersona("11111111D", "LisaL", "Simpson",
+					"02-02-2005");
 		} catch (ParseException e) {
 			e.printStackTrace();
 		} catch (ExcepcionPersonas excepcionPersonas) {
@@ -48,10 +52,15 @@ public class SGAEServerApplication extends Application{
 			controladorGruposMusicales.crearGrupoMusical("aaaabbbbaaaa", "bb", "11-11-1111");
 			controladorGruposMusicales.crearAlbum("aaaaaaaa","holiso","01-11-2222",8000);
 			controladorGruposMusicales.crearAlbum("aaaaaaaa","holisosadad","11-01-2222",8000);
+			controladorGruposMusicales.anadirMiembro("aaaaaaaa","00000000A");
+			controladorGruposMusicales.anadirMiembro("aaaaaaaa","11111111B");
+			controladorGruposMusicales.eliminarMiembro("aaaaaaaa","11111111B");
 		}catch(ParseException a){
 			
 		}catch(ExcepcionGruposMusicales a){
 			
+		} catch (ExcepcionPersonas excepcionPersonas) {
+			excepcionPersonas.printStackTrace();
 		}
 		try{
 			controladorGruposMusicales.anadirPista("aaaaaaaa","a0","Pista1",2);
@@ -74,6 +83,7 @@ public class SGAEServerApplication extends Application{
 		router.attach("/personas/{dni}",PersonaServerResource.class);
 		router.attach("/gruposmusicales/",GruposMusicalesServerResource.class);
 		router.attach("/gruposmusicales/{cif}",GrupoMusicalServerResource.class);
+		router.attach("/gruposmusicales/{cif}/miembros/",MiembrosServerResource.class);
 		router.attach("/gruposmusicales/{cif}/albumes/",AlbumesServerResource.class);
 		router.attach("/gruposmusicales/{cif}/albumes/{albumId}",AlbumServerResource.class);
 		router.attach("/gruposmusicales/{cif}/albumes/{albumId}/pistas/",PistasServerResource.class);

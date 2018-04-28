@@ -77,7 +77,7 @@ public class PistasServerResource extends ServerResource{
                 }
                 //Preparamos el modelo de datos
                 Map<String,Object> pistaDataModel = new HashMap<String,Object>();
-                pistaDataModel.put("pistas",pistasInfoBreve);
+                pistaDataModel.put("pistas",pistasHTML);
                 //Cargamos la plantilla velocity
                 Representation pistaVtl = new ClientResource(LocalReference.createClapReference(getClass().getPackage())+"/pistas.vtl").get();
                 result = new TemplateRepresentation(pistaVtl,pistaDataModel,MediaType.TEXT_HTML);

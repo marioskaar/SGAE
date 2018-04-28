@@ -25,7 +25,9 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="titulo" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="dni" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="nombre" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="apellidos" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="uri" type="{http://www.ptpd.tel.uva.es/ns/sgaerest/util/link}link"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
@@ -37,39 +39,93 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "titulo",
+    "dni",
+    "nombre",
+    "apellidos",
     "uri"
 })
-@XmlRootElement(name = "AlbumInfoBreve")
-public class AlbumInfoBreve {
+@XmlRootElement(name = "MiembroInfoBreve")
+public class MiembroInfoBreve {
 
     @XmlElement(required = true)
-    protected String titulo;
+    protected String dni;
+    @XmlElement(required = true)
+    protected String nombre;
+    @XmlElement(required = true)
+    protected String apellidos;
     @XmlElement(required = true)
     protected Link uri;
 
     /**
-     * Gets the value of the titulo property.
+     * Gets the value of the dni property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getTitulo() {
-        return titulo;
+    public String getDni() {
+        return dni;
     }
 
     /**
-     * Sets the value of the titulo property.
+     * Sets the value of the dni property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setTitulo(String value) {
-        this.titulo = value;
+    public void setDni(String value) {
+        this.dni = value;
+    }
+
+    /**
+     * Gets the value of the nombre property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getNombre() {
+        return nombre;
+    }
+
+    /**
+     * Sets the value of the nombre property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setNombre(String value) {
+        this.nombre = value;
+    }
+
+    /**
+     * Gets the value of the apellidos property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getApellidos() {
+        return apellidos;
+    }
+
+    /**
+     * Sets the value of the apellidos property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setApellidos(String value) {
+        this.apellidos = value;
     }
 
     /**

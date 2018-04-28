@@ -27,7 +27,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element ref="{http://www.ptpd.tel.uva.es/ns/sgaerest/util/esquemaRepresentacionesRecursos}PistaInfoBreve" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element ref="{http://www.ptpd.tel.uva.es/ns/sgaerest/util/esquemaRepresentacionesRecursos}MiembroInfoBreve" maxOccurs="unbounded" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -38,41 +38,41 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "pistaInfoBreve"
+    "miembroInfoBreve"
 })
-@XmlRootElement(name = "Pistas")
-public class Pistas {
+@XmlRootElement(name = "Miembros")
+public class Miembros {
 
-    @XmlElement(name = "PistaInfoBreve", namespace = "http://www.ptpd.tel.uva.es/ns/sgaerest/util/esquemaRepresentacionesRecursos")
-    protected List<PistaInfoBreve> pistaInfoBreve;
+    @XmlElement(name = "MiembroInfoBreve", namespace = "http://www.ptpd.tel.uva.es/ns/sgaerest/util/esquemaRepresentacionesRecursos")
+    protected List<MiembroInfoBreve> miembroInfoBreve;
 
     /**
-     * Gets the value of the pistaInfoBreve property.
+     * Gets the value of the miembroInfoBreve property.
      * 
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the pistaInfoBreve property.
+     * This is why there is not a <CODE>set</CODE> method for the miembroInfoBreve property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
-     *    getPistaInfoBreve().add(newItem);
+     *    getMiembroInfoBreve().add(newItem);
      * </pre>
      * 
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link PistaInfoBreve }
+     * {@link MiembroInfoBreve }
      * 
      * 
      */
-    public List<PistaInfoBreve> getPistaInfoBreve() {
-        if (pistaInfoBreve == null) {
-            pistaInfoBreve = new ArrayList<PistaInfoBreve>();
+    public List<MiembroInfoBreve> getMiembroInfoBreve() {
+        if (miembroInfoBreve == null) {
+            miembroInfoBreve = new ArrayList<MiembroInfoBreve>();
         }
-        return this.pistaInfoBreve;
+        return this.miembroInfoBreve;
     }
 
 }

@@ -74,7 +74,7 @@ public class AlbumesServerResource extends ServerResource {
 				}
 				//Preparamos el modelo de datos
 				Map<String,Object> albumDataModel = new HashMap<String,Object>();
-				albumDataModel.put("albumes",albumesInfoBreve);
+				albumDataModel.put("albumes",albumesHTML);
 				//Cargamos la plantilla velocity
 				Representation albumVtl = new ClientResource(LocalReference.createClapReference(getClass().getPackage())+"/albumes.vtl").get();
 				result = new TemplateRepresentation(albumVtl,albumDataModel,MediaType.TEXT_HTML);

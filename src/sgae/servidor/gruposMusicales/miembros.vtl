@@ -1,0 +1,47 @@
+<html>
+<head><title> Lista de miembros </title></head>
+<body>
+	<table>
+		<tbody>
+            <tr><th>Lista de miembros actuales</th></tr>
+#foreach($m in $miembros.miembroInfoBreve)
+			<tr>
+				<td>DNI</td>
+				<td>$m.dni</td>
+			</tr>
+			<tr>
+				<td>Nombre</td>
+				<td>$m.nombre</td>
+			</tr>
+			<tr>
+				<td>Apellidos</td>
+				<td>$m.apellidos</td>
+			</tr>
+			<tr>
+			    <td>URI Miembro:</td>
+			    <td><a href="$m.uri.href">Link</a></td>
+    		</tr>
+#end
+            <tr><th>Lista de miembros anteriores</th></tr>
+#foreach($m in $miembrosanteriores.miembroInfoBreve)
+			<tr>
+				<td>DNI</td>
+				<td>$m.dni</td>
+			</tr>
+			<tr>
+				<td>Nombre</td>
+				<td>$m.nombre</td>
+			</tr>
+			<tr>
+				<td>Apellidos</td>
+				<td>$m.apellidos</td>
+			</tr>
+			<tr>
+			    <td>URI Miembro:</td>
+			    <td><a href="$m.uri.href">Link</a></td>
+    		</tr>
+#end
+		</tbody>
+	</table>
+</body>
+</html>
