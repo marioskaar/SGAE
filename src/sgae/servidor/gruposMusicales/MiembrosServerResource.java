@@ -89,7 +89,7 @@ public class MiembrosServerResource extends ServerResource {
                     miembrosAnterioresInfoBreve.add(miembroInfoAnterior);
                 }
                 //Preparamos el modelo de datos
-                Map<String,Object> miembroDataModel = new HashMap<>();
+                Map<String,Object> miembroDataModel = new HashMap<String,Object>();
                 miembroDataModel.put("miembros",miembrosHTML);
                 miembroDataModel.put("miembrosanteriores",miembrosAnterioresHTML);
                 //Cargamos la plantilla velocity
