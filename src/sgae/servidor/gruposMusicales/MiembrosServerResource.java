@@ -55,8 +55,8 @@ public class MiembrosServerResource extends ServerResource {
 	 * 
 	 * @param variant nos indica si la petición es en formato texto plano o HTML.
 	 * @return la lista de miembros actuales y miembros anteriores en texto plano y HTML.
-	 * @throws ExcepcionGruposMusicales si no existe un grupo musical registrado con el cif introducido.
-	 * @throws IOException si se produce un error al generar el documento HTML.
+	 * @throws ResourceException si no existe un grupo musical registrado con el cif introducido.
+	 * O si se produce un error al generar el documento HTML.
 	 */
     //Get con negociacion de contenido, txt y html
     @Override

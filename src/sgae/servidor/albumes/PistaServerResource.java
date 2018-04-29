@@ -63,9 +63,9 @@ public class PistaServerResource extends ServerResource{
 	 * 
 	 * @param variant nos indica si la petición es en formato texto plano o HTML.
 	 * @return representación del recurso pista en texto plano o HTML.
-	 * @throws ExcepcionGruposMusicales si no existe un grupo musical registrado con el cif introducido.
-	 * @throws ExcepcionAlbumes si no existe un álbum con el idAlbum introducido.
-	 * @throws ExcepcionPistas si no existe una pista con el idPista introducido.
+	 * @throws ResourceException si no existe un grupo musical registrado con el cif introducido.
+	 * O si no existe un álbum con el idAlbum introducido.
+	 * O si no existe una pista con el idPista introducido.
 	 * 
 	 */   
     //Metodo Get con negociacion de contenidos
@@ -132,9 +132,9 @@ public class PistaServerResource extends ServerResource{
 	 * 
 	 * @param variant nos indica el formato de la petición.
 	 * @return cadena de texto que nos indica la pista que ha sido eliminada del sistema..
-	 * @throws ExcepcionGruposMusicales si no existe un grupo musical registrado con el cif introducido.
-	 * @throws ExcepcionAlbumes si no existe un álbum con el idAlbum introducido.
-	 * @throws ExcepcionPistas si no existe una pista con el idPista introducido.
+	 * @throws ResourceException si no existe un grupo musical registrado con el cif introducido.
+	 * O si no existe un álbum con el idAlbum introducido.
+	 * O si no existe una pista con el idPista introducido.
 	 */
     //Metodo Delete
     @Override

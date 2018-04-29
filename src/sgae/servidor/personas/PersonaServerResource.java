@@ -48,7 +48,7 @@ public class PersonaServerResource extends ServerResource {
 	 * Método que realiza una operación GET sobre el recurso Persona en formato texto plano.
 	 * 
 	 * @return una cadena de texto con la representación del recurso persona en texto plano.
-	 * @throws ExcepcionPersonas si no existe una persona registrada con el dni introducido.
+	 * @throws ResourceException si no existe una persona registrada con el dni introducido.
 	 */
 
 	//Metodo GET en texto plano
@@ -70,7 +70,7 @@ public class PersonaServerResource extends ServerResource {
 	 * Método que realiza una operación GET sobre el recurso Persona en formato XML utilizando la API JAXB..
 	 * 
 	 * @return representación del recurso persona en XML.
-	 * @throws ExcepcionPersonas si no existe una persona registrada con el dni introducido.
+	 * @throws ResourceException si no existe una persona registrada con el dni introducido.
 	 */
 
 	//Metodo GET en formato XML
@@ -102,8 +102,8 @@ public class PersonaServerResource extends ServerResource {
 	 * 
 	 * @param data datos de entrada de una persona.
 	 * @return una cadena de texto con el recurso Persona que ha sido creado o modificado.
-	 * @throws ParseException si la fecha de nacimiento introducida no se encuentra en el formato correcto.
-	 * @throws ExcepcionPersonas si la persona existe al intentar cambiarla se modifica.
+	 * @throws ResourceException si la fecha de nacimiento introducida no se encuentra en el formato correcto.
+	 * O si la persona existe al intentar cambiarla se modifica.
 	 */
 
 	//Metodo put para registrar personas o modificarlas
@@ -150,7 +150,7 @@ public class PersonaServerResource extends ServerResource {
 	 * Método que realiza una operación DELETE sobre el recurso Persona.
 	 * 
 	 * @return cadena de texto que nos indica la persona que ha sido eliminada del sistema.
-	 * @throws ExcepcionPersonas si el dni no coincide con ninguna persona del sistema.
+	 * @throws ResourceException si el dni no coincide con ninguna persona del sistema.
 	 */
 	//Metodo delete para eliminar una persona
 	@Delete

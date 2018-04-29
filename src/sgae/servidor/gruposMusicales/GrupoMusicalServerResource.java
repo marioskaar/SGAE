@@ -76,7 +76,7 @@ public class GrupoMusicalServerResource extends ServerResource{
 	 * Método que realiza una operación GET sobre el recurso Grupo Musical en formato XML utilizando la API JAXB..
 	 * 
 	 * @return representación del recurso grupo musical en XML.
-	 * @throws ExcepcionGruposMusicales si no existe un grupo musical  registrado con el cif introducido.
+	 * @throws ResourceException si no existe un grupo musical  registrado con el cif introducido.
 	 */
 
     //Metodo GET en formato XML
@@ -117,9 +117,9 @@ public class GrupoMusicalServerResource extends ServerResource{
 	 * 
 	 * @param data datos de entrada de un grupo musical.
 	 * @return una cadena de texto con el recurso grupo musical que ha sido creado o modificado.
-	 * @throws ParseException si la fecha de creación introducida no se encuentra en el formato correcto.
-	 * @throws ExcepcionGruposMusicales si el grupo musical existe al intentar cambiarlo se modifica.
-	 * @throws ExcepcionPersonas al aniadir un miembro a un grupo musical y el dni introducido no
+	 * @throws ResourceException si la fecha de creación introducida no se encuentra en el formato correcto.
+	 * O si el grupo musical existe al intentar cambiarlo se modifica.
+	 * O al aniadir un miembro a un grupo musical y el dni introducido no
 	 *  esta registrado en el sistema.
 	 */
   	//Metodo put para la creacion de un grupo musical, su modificacion y la adiccion de miembros
@@ -210,7 +210,7 @@ public class GrupoMusicalServerResource extends ServerResource{
 	 * Método que realiza una operación DELETE sobre el recurso Grupo Musical.
 	 * 
 	 * @return cadena de texto que nos indica el grupo musical que ha sido eliminado del sistema.
-	 * @throws ExcepcionGrupoMusical si el cif no coincide con ningún grupo musical del sistema.
+	 * @throws ResourceException si el cif no coincide con ningún grupo musical del sistema.
 	 */
 
     //Metodo para borrar un grupo musical

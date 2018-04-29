@@ -63,7 +63,7 @@ public class RootServerResource extends ServerResource{
 	 * Método que realiza una operación GET sobre el recurso Raíz en formato XML utilizando la API DOM.
 	 * 
 	 * @return representación del recurso raíz en formato XML.
-	 * @throws IOException si se produce un error en la creación del documento.
+	 * @throws ResourceException si se produce un error en la creación del documento.
 	 */
 
 	@Get ("xml")

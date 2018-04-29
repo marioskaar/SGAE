@@ -61,11 +61,11 @@ import sgae.util.generated.Link;
 	}
 	/**
 	 * Método que realiza una operación GET sobre el recurso Álbumes en formato texto plano y HTML.
-	 * 
+	 *
 	 * @param variant nos indica si la petición es en formato texto plano o HTML.
 	 * @return representación del recurso álbumes en texto plano o HTML.
-	 * @throws ExcepcionGruposMusicales si no existe un grupo musical registrado con el cif introducido.
-	 * @throws IOExcepcion si se produce algún error en la generación del documento HTML.
+	 * @throws ResourceException si no existe un grupo musical registrado con el cif introducido.
+	 * o si se produce algún error en la generación del documento HTML.
 	 */
 	//Get con negociacion de contenido, txt y html
 	@Override
@@ -132,8 +132,8 @@ import sgae.util.generated.Link;
 	 * @param data datos que se introcen en el formulario HTML.
 	 * @param variant nos indica el formato de la petición.
 	 * @return representación del recurso álbumes creado en formato HTML.
-	 * @throws ParseException si la fecha de publicación se ha introducido en un formato incorrecto.
-	 * @throws ExcepcionGruposMusicales si no existe un grupo musical registrado con el cif introducido.
+	 * @throws ResourceException si la fecha de publicación se ha introducido en un formato incorrecto.
+	 * O si no existe un grupo musical registrado con el cif introducido.
 	 */
 
 	//Metodo Post para la creacion de albumes, con negociacion de contenido

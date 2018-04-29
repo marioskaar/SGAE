@@ -22,10 +22,10 @@ import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Map;
 /**
- * Clase que recoge las características del recurso Álbum y 
- * los métodos para consultar dichas características en formato texto plano y en HTML y
- *  para la modificación en formulario HTML (con negociación de contenidos).
- * @author Mario Calle Martín y Raquel Pérez García.Máster en Ingeniería de Telecomunicaciones.
+ * Clase que recoge las caracterï¿½sticas del recurso ï¿½lbum y 
+ * los mï¿½todos para consultar dichas caracterï¿½sticas en formato texto plano y en HTML y
+ *  para la modificaciï¿½n en formulario HTML (con negociaciï¿½n de contenidos).
+ * @author Mario Calle Martï¿½n y Raquel Pï¿½rez Garcï¿½a.Mï¿½ster en Ingenierï¿½a de Telecomunicaciones.
  * @version 1.0
  *
  */
@@ -39,10 +39,10 @@ public class AlbumServerResource extends ServerResource{
     private String idAlbum;
     
     /**
-	 * Método que realiza la inicialización estándar del recurso Álbum.
+	 * Mï¿½todo que realiza la inicializaciï¿½n estï¿½ndar del recurso ï¿½lbum.
 	 * cif Se obtiene el cif del grupo musical introducido.
-	 * idAlbum Se obtiene el identificador del álbum introducido.
-	 * @throws ResourceException si no se puede realizar la inicialización.
+	 * idAlbum Se obtiene el identificador del ï¿½lbum introducido.
+	 * @throws ResourceException si no se puede realizar la inicializaciï¿½n.
 	 * 
 	 */
 
@@ -57,13 +57,13 @@ public class AlbumServerResource extends ServerResource{
         this.idAlbum = getAttribute("albumId");
     }
     /**
-	 * Método que realiza una operación GET sobre el recurso Álbum en formato texto plano y HTML.
+	 * Mï¿½todo que realiza una operaciï¿½n GET sobre el recurso ï¿½lbum en formato texto plano y HTML.
 	 * 
-	 * @param variant nos indica si la petición es en formato texto plano o HTML.
-	 * @return representación del recurso álbum en texto plano o HTML.
-	 * @throws ExcepcionGruposMusicales si no existe un grupo musical registrado con el cif introducido.
-	 * @throws ExcepcionAlbumes si no existe el álbum con el idAlbum introducido.
-	 * @throws IOExcepcion si se produce algún error en la generación del documento HTML.
+	 * @param variant nos indica si la peticiï¿½n es en formato texto plano o HTML.
+	 * @return representaciï¿½n del recurso ï¿½lbum en texto plano o HTML.
+	 * @throws ResourceException si no existe un grupo musical registrado con el cif introducido.
+	 * O si no existe el ï¿½lbum con el idAlbum introducido.
+	 * O si se produce algï¿½n error en la generaciï¿½n del documento HTML.
 	 */   
 
     //Metodo get con negociacion de contenido
@@ -128,12 +128,12 @@ public class AlbumServerResource extends ServerResource{
         return result;
     }
     /**
-	 * Método que realiza una operación DELETE sobre el recurso Álbum.
+	 * Mï¿½todo que realiza una operaciï¿½n DELETE sobre el recurso ï¿½lbum.
 	 * 
-	 * @param variant nos indica el formato de la petición.
-	 * @return cadena de texto que nos indica el álbum que ha sido eliminado del sistema..
-	 * @throws ExcepcionGruposMusicales si no existe un grupo musical registrado con el cif introducido.
-	 * @throws ExcepcionAlbumes si no existe un álbum con el idAlbum introducido.
+	 * @param variant nos indica el formato de la peticiï¿½n.
+	 * @return cadena de texto que nos indica el ï¿½lbum que ha sido eliminado del sistema..
+	 * @throws ResourceException si no existe un grupo musical registrado con el cif introducido.
+	 * O si no existe un ï¿½lbum con el idAlbum introducido.
 	 */
     //Metodo Delete
     @Override
@@ -156,14 +156,14 @@ public class AlbumServerResource extends ServerResource{
         return result;
     }
     /**
-	 * Método que realiza una operación PUT sobre el recurso Álbum en formato HTML.
+	 * Mï¿½todo que realiza una operaciï¿½n PUT sobre el recurso ï¿½lbum en formato HTML.
 	 * 
 	 * @param data datos que se introducen en el formulario.
-	 * @param variant nos indica el formato de la petición.
-	 * @return representación del recurso álbum modificado en formato HTML.
-	 * @throws ParseException si el formato de la fecha de publicación es incorrecto.
-	 * @throws ExcepcionGruposMusicales si no existe un grupo musical registrado con el cif introducido.
-	 * @throws ExcepcionAlbumes si no existe un álbum con el idAlbum introducido.
+	 * @param variant nos indica el formato de la peticiï¿½n.
+	 * @return representaciï¿½n del recurso ï¿½lbum modificado en formato HTML.
+	 * @throws ResourceException si el formato de la fecha de publicaciï¿½n es incorrecto.
+	 * O si no existe un grupo musical registrado con el cif introducido.
+	 * O si no existe un ï¿½lbum con el idAlbum introducido.
 	 */
 
     //Metodo Put para la modificacion del album

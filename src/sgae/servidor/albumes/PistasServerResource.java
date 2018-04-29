@@ -22,7 +22,6 @@ import sgae.util.generated.Pistas;
 import sgae.util.generated.Link;
 
 import java.io.IOException;
-import java.text.ParseException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -64,9 +63,9 @@ public class PistasServerResource extends ServerResource{
 	 * 
 	 * @param variant nos indica si la petición es en formato texto plano o HTML.
 	 * @return representación del recurso pistas en texto plano o HTML.
-	 * @throws ExcepcionGruposMusicales si no existe un grupo musical registrado con el cif introducido.
-	 * @throws ExcepcionAlbumes si no existe un álbum con el idAlbum introducido.
-	 * @throws IOExcepcion si se produce algún error en la generación del documento HTML.
+	 * @throws ResourceException si no existe un grupo musical registrado con el cif introducido.
+     * O si no existe un álbum con el idAlbum introducido.
+	 * O si se produce algún error en la generación del documento HTML.
 	 */
     //Metodo Get con negociacion de contenido
     @Override
@@ -139,9 +138,9 @@ public class PistasServerResource extends ServerResource{
 	 * @param data datos que se introcen en el formulario HTML.
 	 * @param variant nos indica el formato de la petición.
 	 * @return representación del recurso pistas creado en formato HTML.
-	 * @throws ExcepcionGruposMusicales si no existe un grupo musical registrado con el cif introducido.
-	 * @throws ExcepcionAlbumes si no existe un álbum con el idAlbum introducido.
-	 * @throws ExcepcionPistas si los parámetros de la pista introducidos no son correctos.
+	 * @throws ResourceException si no existe un grupo musical registrado con el cif introducido.
+	 * O si no existe un álbum con el idAlbum introducido.
+	 * O si los parámetros de la pista introducidos no son correctos.
 	 */
 
     //Metodo Post para la creacion de pistas
