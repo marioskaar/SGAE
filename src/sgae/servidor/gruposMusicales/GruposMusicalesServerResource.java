@@ -5,10 +5,9 @@ import java.util.List;
 import org.restlet.ext.jaxb.JaxbRepresentation;
 import org.restlet.representation.Representation;
 import org.restlet.resource.Get;
-import org.restlet.resource.ResourceException;
 import org.restlet.resource.ServerResource;
-
 import org.restlet.data.Status;
+
 import sgae.nucleo.gruposMusicales.ControladorGruposMusicales;
 import sgae.util.generated.GrupoMusicalInfoBreve;
 import sgae.util.generated.Link;
@@ -17,27 +16,9 @@ import sgae.util.generated.GruposMusicales;
 
 public class GruposMusicalesServerResource extends ServerResource{
 	//Obtenemos la referencia de la aplicacion
-	SGAEServerApplication ref = (SGAEServerApplication)getApplication();
+	private SGAEServerApplication ref = (SGAEServerApplication)getApplication();
 	//Objeto de la clase ControladorGruposMusicales que hace referencia al instanciado en la clase SGAEServerApplication
-	ControladorGruposMusicales controladorGruposMusicales = ref.getControladorGruposMusicales();
-
-	//Tareas a realizar en la inicialización estándar del recurso
-	@Override
-	protected void doInit() throws ResourceException{
-		System.out.println("The grupos musicales resource was initialized");
-	}
-
-	//Tareas en la gestión estándar del recurso
-	@Override
-	protected void doCatch(Throwable throwable){
-		System.out.println("An exception was thrown in the grupos musicales resource");
-	}
-
-	//Tareas a realizar en la liberación estándar del recurso
-	@Override
-	protected void doRelease() throws ResourceException{
-		System.out.println("The grupos musicales resource was release");
-	}
+	private ControladorGruposMusicales controladorGruposMusicales = ref.getControladorGruposMusicales();
 
 	//Método GET en texto plano
 	@Get("txt")
@@ -48,7 +29,7 @@ public class GruposMusicalesServerResource extends ServerResource{
 	    //Si no hay ningun grupo musical registrado en la aplicacion devolvemos el estado
         //No Content en la respuesta
 		if(controladorGruposMusicales.recuperarGruposMusicales().size()==0) {
-			getResponse().setStatus(Status.SUCCESS_NO_CONTENT);
+			getResponse().setStatus(Status.SUCCESS_NO_CONTENT,"No hay grupos registrados");
 		}else{
 			//Para cada grupo almacenado en la lista, devolvemos su infobreve
 			for (sgae.nucleo.gruposMusicales.GrupoMusical gm : controladorGruposMusicales.recuperarGruposMusicales()){
@@ -67,21 +48,25 @@ public class GruposMusicalesServerResource extends ServerResource{
 	    //Si no hay ningun grupo musical registrado en la aplicacion devolvemos el estado
         //No Content en la respuesta
 		if(controladorGruposMusicales.recuperarGruposMusicales().size()==0) {
-			getResponse().setStatus(Status.SUCCESS_NO_CONTENT);
+			getResponse().setStatus(Status.SUCCESS_NO_CONTENT,"No hay grupos registrados");
 		}else{
 	        for (sgae.nucleo.gruposMusicales.GrupoMusical gm : controladorGruposMusicales.recuperarGruposMusicales()){
+                //Para cada grupo se genera un objeto de la clase auxiliar de representacion en xml
 	        	GrupoMusicalInfoBreve gmXML = new GrupoMusicalInfoBreve();
 	            gmXML.setCif(gm.getCif());
 				gmXML.setNombre(gm.getNombre());
 				gmXML.setFechaCreacion(gm.getFechaCreacion());
+				//Objeto link para asignar la URI
 	            Link link = new Link();
 	            link.setHref("gruposmusicales/"+gm.getCif());
 				link.setTitle("GrupoMusical");
 				link.setType("simple");
 				gmXML.setUri(link);
+				//Se aniade el grupo a la lista
 				grupoMusicalInfoBreve.add(gmXML);
 			}
 		}
+		//Se genera el documento xml que se envia como respuesta
         JaxbRepresentation<GruposMusicales> result = new JaxbRepresentation<GruposMusicales>(gmsXML);
 		result.setFormattedOutput(true);
 		return result;

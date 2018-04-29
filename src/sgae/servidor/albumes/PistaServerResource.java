@@ -23,15 +23,18 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class PistaServerResource extends ServerResource{
-    SGAEServerApplication ref = (SGAEServerApplication)getApplication();
-    ControladorGruposMusicales controladorGruposMusicales = ref.getControladorGruposMusicales();
+    //Obtenemos la referencia de la aplicacion
+    private SGAEServerApplication ref = (SGAEServerApplication)getApplication();
+    //Objeto de la clase ControladorGruposMusicales que hace referencia al instanciado en la clase SGAEServerApplication
+    private ControladorGruposMusicales controladorGruposMusicales = ref.getControladorGruposMusicales();
+    //Cif grupo, id album, id pista
     private String cif;
     private String idAlbum;
     private String idPista;
 
 
     //Tareas a realizar en la inicializacion estandar del recurso
-    //con negociacion de contenidos
+    //con negociacion de contenidos y obtenccion del cif, id album e id pista
     @Override
     protected void doInit()throws ResourceException {
         getVariants().add(new Variant(MediaType.TEXT_PLAIN));
@@ -42,60 +45,84 @@ public class PistaServerResource extends ServerResource{
         this.idPista = getAttribute("pistaId");
     }
 
+    //Metodo Get con negociacion de contenidos
     @Override
     protected Representation get(Variant variant)throws ResourceException{
         Representation result = null;
         if(MediaType.TEXT_PLAIN.isCompatible(variant.getMediaType())){
+            //texto plano
             try{
+                //Devolver la informacion de la pista
                 StringBuilder result1 = new StringBuilder();
                 result1.append(controladorGruposMusicales.verPista(this.cif,this.idAlbum,this.idPista));
                 result = new StringRepresentation(result1.toString());
             } catch(ExcepcionAlbumes a){
-                throw new ResourceException(Status.CLIENT_ERROR_NOT_FOUND);
+                //id del album no existe
+                throw new ResourceException(Status.CLIENT_ERROR_NOT_FOUND,a.getCausaFallo());
             } catch(ExcepcionGruposMusicales e){
-                throw new ResourceException(Status.CLIENT_ERROR_NOT_FOUND);
-            } catch (ExcepcionPistas excepcionPistas) {
-                throw new ResourceException(Status.CLIENT_ERROR_BAD_REQUEST);
+                //cif del grupo no existe
+                throw new ResourceException(Status.CLIENT_ERROR_NOT_FOUND,e.getCausaFallo());
+            } catch (ExcepcionPistas e) {
+                //id de la pista no existe
+                throw new ResourceException(Status.CLIENT_ERROR_NOT_FOUND,e.getCausaFallo());
             }
         }else if(MediaType.TEXT_HTML.isCompatible(variant.getMediaType())){
+            //HTML
+            //Clase auxiliar
             Pista pistaHTML = new Pista();
             try{
+                //Introducir los datos de la pista
                 sgae.nucleo.gruposMusicales.Pista p = controladorGruposMusicales.recuperarPista(this.cif,this.idAlbum,this.idPista);
                 pistaHTML.setIdPista(p.getIdPista());
                 pistaHTML.setNombre(p.getNombre());
                 pistaHTML.setDuracion(p.getDuracion());
 
+                //Modelo de datos
                 Map<String, Object> dataModel = new HashMap<String,Object>();
                 dataModel.put("pista",pistaHTML);
+                //Plantilla velocity
                 Representation pistaVtl = new ClientResource(LocalReference.createClapReference(getClass().getPackage())
                         + "/pista.vtl").get();
+                //Generacion del documento HTML
                 Representation result2 = new TemplateRepresentation(pistaVtl,dataModel,MediaType.TEXT_HTML);
                 return result2;
             } catch(ExcepcionAlbumes a){
-                throw new ResourceException(Status.CLIENT_ERROR_BAD_REQUEST);
+                //id album no existe
+                throw new ResourceException(Status.CLIENT_ERROR_NOT_FOUND,a.getCausaFallo());
             } catch(ExcepcionGruposMusicales e){
-                throw new ResourceException(Status.CLIENT_ERROR_BAD_REQUEST);
+                //cif no existe
+                throw new ResourceException(Status.CLIENT_ERROR_NOT_FOUND,e.getCausaFallo());
             } catch (IOException io){
-                throw new ResourceException(Status.SERVER_ERROR_INTERNAL);
-            } catch (ExcepcionPistas excepcionPistas) {
-                throw new ResourceException(Status.CLIENT_ERROR_BAD_REQUEST);
+                //Error al generar documento HTML
+                throw new ResourceException(Status.SERVER_ERROR_INTERNAL,"No se ha creado el documento HTML");
+            } catch (ExcepcionPistas e) {
+                //no existe id pista
+                throw new ResourceException(Status.CLIENT_ERROR_NOT_FOUND,e.getCausaFallo());
             }
+        }else{
+            throw new ResourceException(Status.CLIENT_ERROR_NOT_ACCEPTABLE,"MediaType no soportado. text/plain text/html");
         }
         return result;
     }
 
+    //Metodo Delete
     @Override
     public Representation delete(Variant variant){
         Representation result = null;
         try{
+            //Se elimina la pista
             controladorGruposMusicales.eliminarPista(this.cif,this.idAlbum,this.idPista);
             result = new StringRepresentation("Se ha borrado la pista con ID: "+this.idPista);
+            //Si se ha eliminado correctamente se devuleve el status 204
+            getResponse().setStatus(Status.SUCCESS_NO_CONTENT,"Se ha eliminado la pista con ID "+this.idPista);
         } catch(ExcepcionAlbumes a){
-            throw new ResourceException(Status.CLIENT_ERROR_BAD_REQUEST);
+            //id album no existe
+            throw new ResourceException(Status.CLIENT_ERROR_NOT_FOUND,a.getCausaFallo());
         } catch(ExcepcionGruposMusicales a){
-            throw new ResourceException(Status.CLIENT_ERROR_BAD_REQUEST);
-        } catch (ExcepcionPistas excepcionPistas) {
-            throw new ResourceException(Status.CLIENT_ERROR_BAD_REQUEST);
+            //cif no existe
+            throw new ResourceException(Status.CLIENT_ERROR_NOT_FOUND,a.getCausaFallo());
+        } catch (ExcepcionPistas e) {
+            throw new ResourceException(Status.CLIENT_ERROR_NOT_FOUND,e.getCausaFallo());
         }
         return result;
     }

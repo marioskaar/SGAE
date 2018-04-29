@@ -22,14 +22,16 @@ import java.util.List;
 import java.util.Map;
 
 public class MiembrosServerResource extends ServerResource {
-
+    //Obtenemos la referencia de la aplicacion
     private SGAEServerApplication ref = (SGAEServerApplication)getApplication();
+    //Objeto de la clase ControladorGruposMusicales que hace referencia al instanciado en la clase SGAEServerApplication
     private ControladorGruposMusicales controladorGruposMusicales = ref.getControladorGruposMusicales();
+    //Cif del grupo musical
     private String cif;
 
 
     //Tareas a realizar en la inicializacion estandar del recurso
-    //con negociacion de contenidos
+    //con negociacion de contenidos y obtencion del cif
     @Override
     protected void doInit()throws ResourceException {
         getVariants().add(new Variant(MediaType.TEXT_PLAIN));
@@ -37,13 +39,16 @@ public class MiembrosServerResource extends ServerResource {
         this.cif = getAttribute("cif");
     }
 
+    //Get con negociacion de contenido, txt y html
     @Override
     protected Representation get(Variant variant)throws ResourceException{
         Representation result = null;
         StringBuilder result2 = new StringBuilder();
 
         if(MediaType.TEXT_PLAIN.isCompatible(variant.getMediaType())){
+            //Texto plano
             try{
+                //Se da informacion de las dos listas de miembros
                 result2.append("Lista de miembros actuales\n");
                 for (sgae.nucleo.personas.Persona p: controladorGruposMusicales.recuperarMiembros(this.cif)){
                     result2.append((p == null) ? "": "DNI: "+p.getDni() + " Nombre: "+p.getNombre()+" Apellidos: "+p.getApellidos()+" Uri relativa: ../../../personas/"+p.getDni()).append('\n');
@@ -54,17 +59,22 @@ public class MiembrosServerResource extends ServerResource {
                 }
                 result = new StringRepresentation(result2.toString());
             }catch(ExcepcionGruposMusicales e){
-                throw new ResourceException(Status.CLIENT_ERROR_BAD_REQUEST);
+                //Si no existe el cif del grupo se devuelve 404
+                throw new ResourceException(Status.CLIENT_ERROR_NOT_FOUND,e.getCausaFallo());
             }
         }else if(MediaType.TEXT_HTML.isCompatible(variant.getMediaType())){
 
+            //HTML
+            //Objetos de las clases auxiliares contenidas en sgae.util.generated
             Miembros miembrosHTML = new Miembros();
             Miembros miembrosAnterioresHTML = new Miembros();
+            //listas de los miembros
             final List<MiembroInfoBreve> miembrosInfoBreve = miembrosHTML.getMiembroInfoBreve();
             final List<MiembroInfoBreve> miembrosAnterioresInfoBreve = miembrosAnterioresHTML.getMiembroInfoBreve();
 
             try{
                 for(sgae.nucleo.personas.Persona p:controladorGruposMusicales.recuperarMiembros(this.cif)){
+                    //incluir la informacion en los objetos auxiliares para cada miembro actual
                     MiembroInfoBreve miembroInfo = new MiembroInfoBreve();
                     miembroInfo.setDni(p.getDni());
                     miembroInfo.setNombre(p.getNombre());
@@ -77,6 +87,7 @@ public class MiembrosServerResource extends ServerResource {
                     miembrosInfoBreve.add(miembroInfo);
                 }
                 for(sgae.nucleo.personas.Persona p:controladorGruposMusicales.recuperarMiembrosAnteriores(this.cif)){
+                    //incluir la informacion en los objetos auxiliares para cada miembro anterior
                     MiembroInfoBreve miembroInfoAnterior = new MiembroInfoBreve();
                     miembroInfoAnterior.setDni(p.getDni());
                     miembroInfoAnterior.setNombre(p.getNombre());
@@ -94,13 +105,18 @@ public class MiembrosServerResource extends ServerResource {
                 miembroDataModel.put("miembrosanteriores",miembrosAnterioresHTML);
                 //Cargamos la plantilla velocity
                 Representation miembroVtl = new ClientResource(LocalReference.createClapReference(getClass().getPackage())+"/miembros.vtl").get();
+                //Generar el documento html
                 result = new TemplateRepresentation(miembroVtl,miembroDataModel,MediaType.TEXT_HTML);
                 return result;
             }catch(ExcepcionGruposMusicales e){
-                throw new ResourceException(Status.CLIENT_ERROR_BAD_REQUEST);
+                //Si no encuentra el cif del grupo
+                throw new ResourceException(Status.CLIENT_ERROR_NOT_FOUND,e.getCausaFallo());
             } catch (IOException e) {
-                throw new ResourceException(Status.SERVER_ERROR_INTERNAL);
+                //Error al generar el documento HTML
+                throw new ResourceException(Status.SERVER_ERROR_INTERNAL,"No se ha creado el documento HTML");
             }
+        }else{
+            throw new ResourceException(Status.CLIENT_ERROR_NOT_ACCEPTABLE,"MediaType no soportado. text/plain text/html");
         }
         return result;
     }

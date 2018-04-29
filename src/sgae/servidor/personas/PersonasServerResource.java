@@ -16,27 +16,9 @@ import sgae.util.generated.Personas;
 
 public class PersonasServerResource extends ServerResource{
     //Obtenemos la referencia de la aplicacion
-	SGAEServerApplication ref = (SGAEServerApplication)getApplication();
+    private SGAEServerApplication ref = (SGAEServerApplication)getApplication();
     //Objeto de la clase ControladorPersonas que hace referencia al instanciado en la clase SGAEServerApplication
-	ControladorPersonas controladorPersonas = ref.getControladorPersonas();
-
-    //Tareas a realizar en la inicializacion estandar del recurso
-	@Override
-	protected void doInit() throws ResourceException{
-		System.out.println("The personas resource was initialized");
-	}
-
-    //Tareas en la gestion estandar del recurso
-	@Override
-	protected void doCatch(Throwable throwable){
-		System.out.println("An exception was thrown in the personas resource");
-	}
-
-    //Tareas a realizar en la liberacion estandar del recurso
-	@Override
-	protected void doRelease() throws ResourceException{
-		System.out.println("The personas resource was release");
-	}
+	private ControladorPersonas controladorPersonas = ref.getControladorPersonas();
 
     //Metodo GET en texto plano
 	@Get("txt")
@@ -46,8 +28,9 @@ public class PersonasServerResource extends ServerResource{
         //Si no hay ninguna persona registrada en la aplicacion devolvemos el estado
         //No Content en la respuesta
 		if(controladorPersonas.recuperarPersonas().size()==0){
-            getResponse().setStatus(Status.SUCCESS_NO_CONTENT);
+            getResponse().setStatus(Status.SUCCESS_NO_CONTENT,"No hay personas registradas");
         }else {
+		    //generacion del documento en texto plano con el listado de las personas
             for (sgae.nucleo.personas.Persona p : controladorPersonas.recuperarPersonas()) {
 		        result.append("DNI: "+p.getDni()+" Nombre: "+p.getNombre()+" Apellidos: "
 		        		+p.getApellidos()+ " URI: personas/"+p.getDni()+"\n");
@@ -58,30 +41,34 @@ public class PersonasServerResource extends ServerResource{
 
     //Metodo GET en formato XML
 	@Get("xml")
-	public Representation toXml() {
+	public Representation toXml() throws ResourceException{
 
 	    //objeto de la clase Personas sgae.util.generated
 		Personas personasXML = new Personas();
-		//obtener la lista de sgae.util.generated
+		//obtener la lista de sgae.util.generated.Personas
         final List<PersonaInfoBreve> personaInfoBreve = personasXML.getPersonaInfoBreve();
 
         //Si no hay personas, se devuelve el estado 204
         if(controladorPersonas.recuperarPersonas().size()==0){
-            getResponse().setStatus(Status.SUCCESS_NO_CONTENT);
+            getResponse().setStatus(Status.SUCCESS_NO_CONTENT,"No hay personas registradas");
         }else {
             for (sgae.nucleo.personas.Persona p : controladorPersonas.recuperarPersonas()) {
+                //Para cada persona se genera un objeto de la clase auxiliar de representacion en xml
                 PersonaInfoBreve personaXML = new PersonaInfoBreve();
                 personaXML.setDni(p.getDni());
                 personaXML.setApellidos(p.getApellidos());
                 personaXML.setNombre(p.getNombre());
+                //Se usa la clase Link para fijar una uri
                 Link link = new Link();
                 link.setHref("personas/" + p.getDni());
                 link.setTitle("Persona");
                 link.setType("simple");
                 personaXML.setUri(link);
+                //Se aniade la persona en la lista
                 personaInfoBreve.add(personaXML);
             }
         }
+        //Se genera el documento xml que se envia como respuesta
         JaxbRepresentation<Personas> result = new JaxbRepresentation<Personas>(personasXML);
 		result.setFormattedOutput(true);
 		return result;

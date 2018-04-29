@@ -1,4 +1,5 @@
 package sgae.servidor.gruposMusicales;
+
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -23,15 +24,18 @@ import sgae.servidor.aplicacion.SGAEServerApplication;
 
 
 public class GrupoMusicalServerResource extends ServerResource{
+	//Obtenemos la referencia de la aplicacion
 	private SGAEServerApplication ref = (SGAEServerApplication)getApplication();
+	//Objeto de la clase ControladorGruposMusicales que hace referencia al instanciado en la clase SGAEServerApplication
 	private ControladorGruposMusicales controladorGruposMusicales = ref.getControladorGruposMusicales();
+	//cif del grupo musical
     private String cif;
     
     //Tareas a realizar en la inicializacion estandar del recurso
+	// obtener el cif del grupo
   	@Override
   	protected void doInit() throws ResourceException{
   		cif = getAttribute("cif");
-  		System.out.println("The grupo musical resource was initialized");
   	}
 
     //Metodo GET en texto plano
@@ -40,20 +44,25 @@ public class GrupoMusicalServerResource extends ServerResource{
   		StringBuilder result = new StringBuilder();
   		
   		try{
+  			//Dar la informacion del grupo musical
   			result.append(controladorGruposMusicales.verGrupoMusical(this.cif));
   			result.append("URI: albumes/\nURI: miembros/");
   		}catch(ExcepcionGruposMusicales a){
-  			throw new ResourceException(Status.CLIENT_ERROR_BAD_REQUEST);
+  			//Si no existe el cif del grupo
+  			throw new ResourceException(Status.CLIENT_ERROR_NOT_FOUND,a.getCausaFallo());
   		}
   		
   		return result.toString();
   	}
+
     //Metodo GET en formato XML
   	@Get("xml")
-  	public Representation toXml() {
-  		
+	public Representation toXml() {
+
+  		//Clase auxiliar de sgae.util.generated
   		GrupoMusical grupoMusicalXML = new GrupoMusical();
   		try{
+  			//Rellenar la informacion para crear el XML
   			sgae.nucleo.gruposMusicales.GrupoMusical grupoMusical = controladorGruposMusicales.recuperarGrupoMusical(this.cif);
   			grupoMusicalXML.setCif(this.cif);
   			grupoMusicalXML.setNombre(grupoMusical.getNombre());
@@ -71,18 +80,22 @@ public class GrupoMusicalServerResource extends ServerResource{
   			grupoMusicalXML.setUri2(link2);
   		
   		}catch(ExcepcionGruposMusicales a){
-  			throw new ResourceException(Status.CLIENT_ERROR_BAD_REQUEST);
+  			//Si no existe el cif del grupo
+  			throw new ResourceException(Status.CLIENT_ERROR_NOT_FOUND,a.getCausaFallo());
   		}
-  		
+  		//Creacion del documento XML
   		JaxbRepresentation<GrupoMusical> result = new JaxbRepresentation<GrupoMusical>(grupoMusicalXML);
   		result.setFormattedOutput(true);
   		return result;
   	}
-    
+
+  	//Metodo put para la creacion de un grupo musical, su modificacion y la adiccion de miembros
     @Put("form-data")
     public String store(Representation data) {
   		StringBuilder result = new StringBuilder();
+  		//Obtener los datos de entrada
     	Form form = new Form(data);
+    	//Obtencion de los dnis si los hubiera
     	String dnis[] = form.getValuesArray("dni");
 
     	try{
@@ -96,14 +109,18 @@ public class GrupoMusicalServerResource extends ServerResource{
 						controladorGruposMusicales.anadirMiembro(this.cif, dni);
 						result.append("Miembro incluido: "+dni+"\n");
 					}
-				}catch (ExcepcionPersonas excepcionPersonas) {
-					throw new ResourceException(Status.CLIENT_ERROR_BAD_REQUEST);
+				}catch (ExcepcionPersonas a) {
+    				//No se encuentra la persona con ese dni
+					throw new ResourceException(Status.CLIENT_ERROR_NOT_FOUND,a.getCausaFallo());
 				}
 			}
-    		getResponse().setStatus(Status.SUCCESS_OK);
+			//Si se ha creado el grupo se devuelve status 201
+    		getResponse().setStatus(Status.SUCCESS_CREATED,"Se ha creado el grupo con CIF "+this.cif);
     	}catch(ParseException a){
-    		throw new ResourceException(Status.CLIENT_ERROR_BAD_REQUEST);
+    		//Fecha mal introducida
+    		throw new ResourceException(Status.CLIENT_ERROR_BAD_REQUEST,"Fecha introducida no valida. dd-mm-aaaa");
     	}catch(ExcepcionGruposMusicales a){
+    		//Si ya existe el grupo se modifica
     		try{
 				//Si el grupo esta creado y hay dnis como parametros, se comparan los dnis con los miembros actuales
 				//los que coincidan no se modifican y los que no aparezcan se paran a la lista de miembros anteriores
@@ -114,6 +131,7 @@ public class GrupoMusicalServerResource extends ServerResource{
 							form.getFirstValue("fechaCreacion"));
 					result.append("Grupo Musical Modificado\n" + controladorGruposMusicales.verGrupoMusical(this.cif));
 				}
+				//Si se han introducido dnis
 				if(dnis.length > 0) {
 					try {
 						List<Persona> miembros = controladorGruposMusicales.recuperarMiembros(this.cif);
@@ -138,27 +156,37 @@ public class GrupoMusicalServerResource extends ServerResource{
 								result.append("Miembro incluido: "+dni+"\n");
 							}
 						}
-					}catch (ExcepcionPersonas excepcionPersonas) {
-					throw new ResourceException(Status.CLIENT_ERROR_BAD_REQUEST);
+					}catch (ExcepcionPersonas aa) {
+						//No existe la persona con el dni
+						throw new ResourceException(Status.CLIENT_ERROR_NOT_FOUND,aa.getCausaFallo());
 					}
 				}
+				//Si se ha modificado correctamente el grupo, se devuelve el status 200
+				getResponse().setStatus(Status.SUCCESS_OK,"Se ha modificado el grupo con CIF "+this.cif);
 			}catch (ParseException aa){
-				throw new ResourceException(Status.CLIENT_ERROR_BAD_REQUEST);
+    			//Fecha de creacion mal introducida al modificar grupo
+				throw new ResourceException(Status.CLIENT_ERROR_BAD_REQUEST,"Fecha introducida no valida. dd-mm-aaaa");
 			}catch (ExcepcionGruposMusicales aa){
-				throw new ResourceException(Status.CLIENT_ERROR_BAD_REQUEST);
+    			//En teoria nunca entraria en este bloque
+				throw new ResourceException(Status.SERVER_ERROR_INTERNAL,"Error interno");
 			}
     	}
 		return result.toString();
     }
 
+    //Metodo para borrar un grupo musical
     @Delete
 	public String remove(){
   		String result;
   		try{
+  			//Se elimina el grupo
   			controladorGruposMusicales.borrarGrupoMusical(this.cif);
   			result = "Se ha borrado el grupo musical con CIF: "+this.cif;
+			//Si se ha eliminado correctamente se devuleve el status 204
+			getResponse().setStatus(Status.SUCCESS_NO_CONTENT,"Se ha eliminado el grupo con CIF "+this.cif);
 		}catch (ExcepcionGruposMusicales a){
-			throw new ResourceException(Status.CLIENT_ERROR_BAD_REQUEST);
+  			//Si no existe
+			throw new ResourceException(Status.CLIENT_ERROR_NOT_FOUND,a.getCausaFallo());
 		}
   		return result;
 	}

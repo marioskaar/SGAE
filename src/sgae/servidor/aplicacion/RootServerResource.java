@@ -1,37 +1,32 @@
 package sgae.servidor.aplicacion;
-import java.io.IOException;
 
+import java.io.IOException;
+//import java.io.File;
+
+import org.restlet.data.Status;
 import org.restlet.representation.Representation;
 import org.restlet.resource.Get;
 import org.restlet.resource.ResourceException;
 import org.restlet.resource.ServerResource;
 import org.restlet.ext.xml.DomRepresentation;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.Element;
-//import java.io.File;
 
 public class RootServerResource extends ServerResource{
+
 	public RootServerResource(){
-	setNegotiated(true);
+		//En la api por defecto dice que esta a true...
+		setNegotiated(true);
 	}
-	@Override
-	protected void doInit() throws ResourceException{
-		System.out.println("The root resource was initialized");
-	}
-	@Override
-	protected void doCatch(Throwable throwable){
-	    throwable.printStackTrace();
-		System.out.println("An exception was thrown in the root resource");
-	}
-	@Override
-	protected void doRelease() throws ResourceException{
-		System.out.println("The root resource was release");
-	}
+
+	//Metodo Get en texto plano
 	@Get ("txt")
 	public String represent(){
-		System.out.println("The GET method of root resource is invoked");
+		//Se genera el documento en texto plano
 		String valor = new String();
+
 		/* //Detecta automoticamente los directorios
 		File file = new File(System.getProperty("user.dir")+"/src/sgae/nucleo");
 	    String files[] = file.list();
@@ -48,38 +43,51 @@ public class RootServerResource extends ServerResource{
 	}
 
 	@Get ("xml")
-	public Representation toXml() throws IOException{
-	DomRepresentation result = new DomRepresentation();
-	result.setIndenting(true);
-	Document doc = result.getDocument();
+	public Representation toXml(){
 
-	Node sgaeElt = doc.createElement("SGAE");
-	sgaeElt.setTextContent("Jerarquia");
-	doc.appendChild(sgaeElt);
-	Node gm = doc.createElement("GruposMusicales");
-	
-	Element linkGM = doc.createElement("link");
-	linkGM.setAttribute("title", "Grupos Musicales");
-	linkGM.setAttribute("type", "simple");
-	linkGM.setAttribute("href", "gruposmusicales/");
-	gm.appendChild(linkGM);
-	sgaeElt.appendChild(gm);
-	
-	Node personas = doc.createElement("Personas");
-	Element linkP = doc.createElement("link");
-	linkP.setAttribute("title", "Personas");
-	linkP.setAttribute("type", "simple");
-	linkP.setAttribute("href", "personas/");
-	personas.appendChild(linkP);
-	sgaeElt.appendChild(personas);
+		try{
+			//creacion de los elementos por debajo del
+			DomRepresentation result = new DomRepresentation();
 
-	Node discograficas = doc.createElement("Discograficas");
-	Element linkD = doc.createElement("link");
-	linkD.setAttribute("title", "Discográficas");
-	linkD.setAttribute("type", "simple");
-	linkD.setAttribute("href", "discograficas/");
-	discograficas.appendChild(linkD);
-	sgaeElt.appendChild(discograficas);
-	return result;
+			result.setIndenting(true);
+			Document doc = result.getDocument();
+
+			//root
+			Node sgaeElt = doc.createElement("SGAE");
+			sgaeElt.setTextContent("Jerarquia");
+			doc.appendChild(sgaeElt);
+
+			//grupos musicales
+			Node gm = doc.createElement("GruposMusicales");
+			Element linkGM = doc.createElement("link");
+			linkGM.setAttribute("title", "Grupos Musicales");
+			linkGM.setAttribute("type", "simple");
+			linkGM.setAttribute("href", "gruposmusicales/");
+			gm.appendChild(linkGM);
+			sgaeElt.appendChild(gm);
+
+			//personas
+			Node personas = doc.createElement("Personas");
+			Element linkP = doc.createElement("link");
+			linkP.setAttribute("title", "Personas");
+			linkP.setAttribute("type", "simple");
+			linkP.setAttribute("href", "personas/");
+			personas.appendChild(linkP);
+			sgaeElt.appendChild(personas);
+
+			//discograficas
+			Node discograficas = doc.createElement("Discograficas");
+			Element linkD = doc.createElement("link");
+			linkD.setAttribute("title", "Discográficas");
+			linkD.setAttribute("type", "simple");
+			linkD.setAttribute("href", "discograficas/");
+			discograficas.appendChild(linkD);
+			sgaeElt.appendChild(discograficas);
+
+			return result;
+		}catch(IOException a){
+			//Si se produce un error en la creacion del documento se lanza status 500
+			throw new ResourceException(Status.SERVER_ERROR_INTERNAL,"No se ha creado el documento XML");
+		}
 	}
 }
