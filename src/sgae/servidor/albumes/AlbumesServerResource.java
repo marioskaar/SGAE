@@ -25,15 +25,30 @@ import sgae.servidor.aplicacion.SGAEServerApplication;
 import sgae.util.generated.AlbumInfoBreve;
 import sgae.util.generated.Albumes;
 import sgae.util.generated.Link;
+/**
+ * Clase que recoge las características del recurso Álbumes y 
+ * los métodos para consultar dichas características en formato texto plano y en HTML y
+ *  para la creación en formulario HTML (con negociación de contenidos).
+ * @author Mario Calle Martín y Raquel Pérez García.Máster en Ingeniería de Telecomunicaciones.
+ * @version 1.0
+ *
+ */
 
-public class AlbumesServerResource extends ServerResource {
+ public class AlbumesServerResource extends ServerResource {
+
 	//Obtenemos la referencia de la aplicacion
 	private SGAEServerApplication ref = (SGAEServerApplication)getApplication();
 	//Objeto de la clase ControladorGruposMusicales que hace referencia al instanciado en la clase SGAEServerApplication
 	private ControladorGruposMusicales controladorGruposMusicales = ref.getControladorGruposMusicales();
 	//Cif del grupo
 	private String cif;
-
+	
+	/**
+	 * Método que realiza la inicialización estándar del recurso Álbumes.
+	 * Se obtiene el cif del grupo musical introducido.
+	 * @throws ResourceException si no se puede realizar la inicialización.
+	 * 
+	 */
 
 	//Tareas a realizar en la inicializacion estandar del recurso
 	//con negociacion de contenidos y obtencion del cif
@@ -44,7 +59,14 @@ public class AlbumesServerResource extends ServerResource {
 		getVariants().add(new Variant(MediaType.APPLICATION_WWW_FORM));
 		this.cif = getAttribute("cif");
 	}
-
+	/**
+	 * Método que realiza una operación GET sobre el recurso Álbumes en formato texto plano y HTML.
+	 * 
+	 * @param variant nos indica si la petición es en formato texto plano o HTML.
+	 * @return representación del recurso álbumes en texto plano o HTML.
+	 * @throws ExcepcionGruposMusicales si no existe un grupo musical registrado con el cif introducido.
+	 * @throws IOExcepcion si se produce algún error en la generación del documento HTML.
+	 */
 	//Get con negociacion de contenido, txt y html
 	@Override
 	protected Representation get(Variant variant)throws ResourceException{
@@ -104,6 +126,15 @@ public class AlbumesServerResource extends ServerResource {
 		}
 		return result;
 	}
+	/**
+	 * Método que realiza una operación POST sobre el recurso Álbumes con negociación de contenidos.
+	 * 
+	 * @param data datos que se introcen en el formulario HTML.
+	 * @param variant nos indica el formato de la petición.
+	 * @return representación del recurso álbumes creado en formato HTML.
+	 * @throws ParseException si la fecha de publicación se ha introducido en un formato incorrecto.
+	 * @throws ExcepcionGruposMusicales si no existe un grupo musical registrado con el cif introducido.
+	 */
 
 	//Metodo Post para la creacion de albumes, con negociacion de contenido
 	@Override

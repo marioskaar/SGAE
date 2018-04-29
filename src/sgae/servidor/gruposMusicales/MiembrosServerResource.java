@@ -20,7 +20,14 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+/**
+ * Clase que recoge las características del recurso Miembros y 
+ * los métodos para consultar dichas características en formato texto plano y en HTML
+ * (negociación de contenidos).
+ * @author Mario Calle Martín y Raquel Pérez García.Máster en Ingeniería de Telecomunicaciones.
+ * @version 1.0
+ *
+ */
 public class MiembrosServerResource extends ServerResource {
     //Obtenemos la referencia de la aplicacion
     private SGAEServerApplication ref = (SGAEServerApplication)getApplication();
@@ -29,6 +36,11 @@ public class MiembrosServerResource extends ServerResource {
     //Cif del grupo musical
     private String cif;
 
+    /**
+	 * Método que realiza la inicialización estándar del recurso Miembros.
+	 * Se obtiene el cif del grupo musical introducido.
+	 * 
+	 */
 
     //Tareas a realizar en la inicializacion estandar del recurso
     //con negociacion de contenidos y obtencion del cif
@@ -38,7 +50,14 @@ public class MiembrosServerResource extends ServerResource {
         getVariants().add(new Variant (MediaType.TEXT_HTML));
         this.cif = getAttribute("cif");
     }
-
+    /**
+	 * Método que realiza una operación GET sobre el recurso Miembros con negociación de contenidos.
+	 * 
+	 * @param variant nos indica si la petición es en formato texto plano o HTML.
+	 * @return la lista de miembros actuales y miembros anteriores en texto plano y HTML.
+	 * @throws ExcepcionGruposMusicales si no existe un grupo musical registrado con el cif introducido.
+	 * @throws IOException si se produce un error al generar el documento HTML.
+	 */
     //Get con negociacion de contenido, txt y html
     @Override
     protected Representation get(Variant variant)throws ResourceException{

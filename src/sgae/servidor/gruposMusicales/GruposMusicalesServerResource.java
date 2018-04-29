@@ -13,13 +13,23 @@ import sgae.util.generated.GrupoMusicalInfoBreve;
 import sgae.util.generated.Link;
 import sgae.servidor.aplicacion.SGAEServerApplication;
 import sgae.util.generated.GruposMusicales;
-
+/**
+ * Clase que recoge las características del recurso Grupos Musicales y 
+ * los métodos para consultar dichas características en formato texto plano y en XML.
+ * @author Mario Calle Martín y Raquel Pérez García.Máster en Ingeniería de Telecomunicaciones.
+ * @version 1.0
+ *
+ */
 public class GruposMusicalesServerResource extends ServerResource{
 	//Obtenemos la referencia de la aplicacion
 	private SGAEServerApplication ref = (SGAEServerApplication)getApplication();
 	//Objeto de la clase ControladorGruposMusicales que hace referencia al instanciado en la clase SGAEServerApplication
 	private ControladorGruposMusicales controladorGruposMusicales = ref.getControladorGruposMusicales();
-
+	/**
+	 * Método que realiza una operación GET sobre el recurso Grupos Musicales en formato texto plano.
+	 * 
+	 * @return cadena de texto con la representación del recurso grupos musicales en texto plano.
+	 */
 	//Método GET en texto plano
 	@Get("txt")
 	//Obtener una representación de la lista de grupos musicales del sistema
@@ -39,7 +49,11 @@ public class GruposMusicalesServerResource extends ServerResource{
 		}
 		return result.toString();
 	}
-
+	/**
+	 * Método que realiza una operación GET sobre el recurso Grupos Musicales en formato XML utilizando la API JAXB.
+	 * 
+	 * @return  representación del recurso grupos musicales en formato XML.
+	 */
 	//Método GET en formato XML
 	@Get("xml")
 	public Representation toXml() {

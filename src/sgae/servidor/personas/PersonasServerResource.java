@@ -13,13 +13,24 @@ import sgae.util.generated.Link;
 import sgae.servidor.aplicacion.SGAEServerApplication;
 import sgae.util.generated.PersonaInfoBreve;
 import sgae.util.generated.Personas;
+/**
+ * Clase que recoge las características del recurso Personas y 
+ * los métodos para consultar dichas características en formato texto plano y en XML.
+ * @author Mario Calle Martín y Raquel Pérez García.Máster en Ingeniería de Telecomunicaciones.
+ * @version 1.0
+ *
+ */
 
 public class PersonasServerResource extends ServerResource{
     //Obtenemos la referencia de la aplicacion
     private SGAEServerApplication ref = (SGAEServerApplication)getApplication();
     //Objeto de la clase ControladorPersonas que hace referencia al instanciado en la clase SGAEServerApplication
 	private ControladorPersonas controladorPersonas = ref.getControladorPersonas();
-
+	/**
+	 * Método que realiza una operación GET sobre el recurso Personas en formato texto plano.
+	 * 
+	 * @return cadena de texto con la representación del recurso personas en texto plano.
+	 */
     //Metodo GET en texto plano
 	@Get("txt")
 	public String represent() {
@@ -38,6 +49,11 @@ public class PersonasServerResource extends ServerResource{
         }
 		return result.toString();
 	}
+	/**
+	 * Método que realiza una operación GET sobre el recurso Personas en formato XML utilizando la API JAXB.
+	 * 
+	 * @return representación del recurso personas en formato XML.
+	 */
 
     //Metodo GET en formato XML
 	@Get("xml")

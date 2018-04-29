@@ -3,24 +3,42 @@ package sgae.servidor.aplicacion;
 import java.io.IOException;
 //import java.io.File;
 
+
 import org.restlet.data.Status;
 import org.restlet.representation.Representation;
 import org.restlet.resource.Get;
 import org.restlet.resource.ResourceException;
 import org.restlet.resource.ServerResource;
 import org.restlet.ext.xml.DomRepresentation;
-
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.Element;
 
-public class RootServerResource extends ServerResource{
+//import sgae.nucleo.gruposMusicales.ExcepcionAlbumes;
+//import sgae.nucleo.gruposMusicales.ExcepcionGruposMusicales;
+//import sgae.servidor.albumes.IOExcepcion;
 
+/**
+ * Clase que recoge las características del recurso Raíz de la aplicación y los métdos
+ * para consultar sus caracterísicas en texto plano y XML utilizando la API DOM.
+ * @author Mario Calle Martín y Raquel Pérez García.Máster en Ingeniería de Telecomunicaciones.
+ * @version 1.0
+ *
+ */
+public class RootServerResource extends ServerResource{
+	/**
+	 * Constructor con los atributos del recurso raíz.
+	 * 
+	 */
 	public RootServerResource(){
 		//En la api por defecto dice que esta a true...
 		setNegotiated(true);
 	}
-
+	/**
+	 * Método que realiza una operación GET sobre el recurso Raíz en formato texto plano.
+	 * 
+	 * @return cadena de texto con la representación del recurso raíz en texto plano.
+	 */
 	//Metodo Get en texto plano
 	@Get ("txt")
 	public String represent(){
@@ -41,6 +59,12 @@ public class RootServerResource extends ServerResource{
 		+ "Nombre recurso: Discograficas; URI relativo: discograficas/";
 		return valor;
 	}
+	/**
+	 * Método que realiza una operación GET sobre el recurso Raíz en formato XML utilizando la API DOM.
+	 * 
+	 * @return representación del recurso raíz en formato XML.
+	 * @throws IOException si se produce un error en la creación del documento.
+	 */
 
 	@Get ("xml")
 	public Representation toXml(){

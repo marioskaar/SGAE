@@ -21,7 +21,14 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Map;
-
+/**
+ * Clase que recoge las características del recurso Álbum y 
+ * los métodos para consultar dichas características en formato texto plano y en HTML y
+ *  para la modificación en formulario HTML (con negociación de contenidos).
+ * @author Mario Calle Martín y Raquel Pérez García.Máster en Ingeniería de Telecomunicaciones.
+ * @version 1.0
+ *
+ */
 public class AlbumServerResource extends ServerResource{
     //Obtenemos la referencia de la aplicacion
     private SGAEServerApplication ref = (SGAEServerApplication)getApplication();
@@ -30,7 +37,14 @@ public class AlbumServerResource extends ServerResource{
     //cif del grupo e identificador del album
     private String cif;
     private String idAlbum;
-
+    
+    /**
+	 * Método que realiza la inicialización estándar del recurso Álbum.
+	 * cif Se obtiene el cif del grupo musical introducido.
+	 * idAlbum Se obtiene el identificador del álbum introducido.
+	 * @throws ResourceException si no se puede realizar la inicialización.
+	 * 
+	 */
 
     //Tareas a realizar en la inicializacion estandar del recurso
     //con negociacion de contenidos y obtencion del cif e identificador del album
@@ -42,6 +56,15 @@ public class AlbumServerResource extends ServerResource{
         this.cif = getAttribute("cif");
         this.idAlbum = getAttribute("albumId");
     }
+    /**
+	 * Método que realiza una operación GET sobre el recurso Álbum en formato texto plano y HTML.
+	 * 
+	 * @param variant nos indica si la petición es en formato texto plano o HTML.
+	 * @return representación del recurso álbum en texto plano o HTML.
+	 * @throws ExcepcionGruposMusicales si no existe un grupo musical registrado con el cif introducido.
+	 * @throws ExcepcionAlbumes si no existe el álbum con el idAlbum introducido.
+	 * @throws IOExcepcion si se produce algún error en la generación del documento HTML.
+	 */   
 
     //Metodo get con negociacion de contenido
     @Override
@@ -104,7 +127,14 @@ public class AlbumServerResource extends ServerResource{
         }
         return result;
     }
-
+    /**
+	 * Método que realiza una operación DELETE sobre el recurso Álbum.
+	 * 
+	 * @param variant nos indica el formato de la petición.
+	 * @return cadena de texto que nos indica el álbum que ha sido eliminado del sistema..
+	 * @throws ExcepcionGruposMusicales si no existe un grupo musical registrado con el cif introducido.
+	 * @throws ExcepcionAlbumes si no existe un álbum con el idAlbum introducido.
+	 */
     //Metodo Delete
     @Override
     public Representation delete(Variant variant){
@@ -125,6 +155,16 @@ public class AlbumServerResource extends ServerResource{
         }
         return result;
     }
+    /**
+	 * Método que realiza una operación PUT sobre el recurso Álbum en formato HTML.
+	 * 
+	 * @param data datos que se introducen en el formulario.
+	 * @param variant nos indica el formato de la petición.
+	 * @return representación del recurso álbum modificado en formato HTML.
+	 * @throws ParseException si el formato de la fecha de publicación es incorrecto.
+	 * @throws ExcepcionGruposMusicales si no existe un grupo musical registrado con el cif introducido.
+	 * @throws ExcepcionAlbumes si no existe un álbum con el idAlbum introducido.
+	 */
 
     //Metodo Put para la modificacion del album
     @Override

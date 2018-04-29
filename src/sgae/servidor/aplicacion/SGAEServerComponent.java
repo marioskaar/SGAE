@@ -5,13 +5,21 @@ import org.restlet.data.Protocol;
 import org.restlet.Context;
 import org.restlet.Server;
 import org.restlet.routing.VirtualHost;
-
+/**
+ * Clase con los conectores lógicos de la aplicación Restlet.
+ * @author Mario Calle Martín y Raquel Pérez García.Máster en Ingeniería de Telecomunicaciones.
+ * @version 1.0
+ */
 public class SGAEServerComponent extends Component{
 
 	public static void main(String[] args) throws Exception{
 		//Se ejecuta el servidor
 		new SGAEServerComponent().start();
 	}
+	/**
+	 * Constructor del servidor de la aplicación.
+	 * 
+	 */
 	public SGAEServerComponent() {
 		//Definir propiedades del componente
 		setName("SGAE server application");

@@ -10,12 +10,22 @@ import sgae.servidor.gruposMusicales.*;
 import sgae.servidor.personas.*;
 import sgae.servidor.albumes.*;
 
+/**
+ * Clase que recoge las características del servidor de la aplicación.
+ * @author Mario Calle Martín y Raquel Pérez García.Máster en Ingeniería de Telecomunicaciones.
+ * @version 1.0
+ *
+ */
 public class SGAEServerApplication extends Application{
 
     //Creacion de los objetos controladores
 	private ControladorPersonas controladorPersonas;
 	private ControladorGruposMusicales controladorGruposMusicales;
-
+	
+	/**
+	 * Constructor con los atributos del servidor de la aplicación.
+	 * 
+	 */
 	//Constructor de la clase SGAEServerApplication
 	public SGAEServerApplication() {
 		setName("SGAE server application");
@@ -26,7 +36,9 @@ public class SGAEServerApplication extends Application{
 		controladorPersonas = new ControladorPersonas();
 		controladorGruposMusicales = new ControladorGruposMusicales(controladorPersonas);
 	}
-	
+	/**Método que asigna las URIs a los distintos recursos de la aplicación.
+	 * 
+	 */
 	@Override
 	public Restlet createInboundRoot(){
 		//Asignacion de URIs a los recursos
