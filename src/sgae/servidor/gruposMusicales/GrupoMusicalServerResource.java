@@ -54,7 +54,7 @@ public class GrupoMusicalServerResource extends ServerResource{
 	 * Método que realiza una operación GET sobre el recurso Grupo Musical en formato texto plano.
 	 * 
 	 * @return una cadena de texto con la representación del recurso grupo musical en texto plano.
-	 * @throws ExcepcionGruposMusicales si no existe un grupo musical registrado con el cif introducido.
+	 * @throws ResourceException si no existe un grupo musical registrado con el cif introducido.
 	 */
 
     //Metodo GET en texto plano
