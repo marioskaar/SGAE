@@ -93,7 +93,7 @@ public class Contrato {
     /**
      * Método que modifica la fecha de inicio del contrato.
      * @param fechaInicio la nueva fecha de inicio del contrato
-     * @throws ParseException si el valor de la fecha no tiene el formato dd-MM-yyyy
+     * @throws si el valor de la fecha no tiene el formato dd-MM-yyyy
      */
     public void setFechaInicio(String fechaInicio) throws ParseException {
         this.fechaInicio = Utils.testStringNullOrEmptyOrWhitespaceAndSet(fechaInicio, "Campo fecha inicio vacío");
@@ -110,7 +110,7 @@ public class Contrato {
     /**
      * Método que modifica la fecha de inicio del contrato.
      * @param fechaFinalizacion la nueva fecha de finalización del contrato
-     * @throws ParseException si el valor de la fecha no tiene el formato dd-MM-yyyy
+     * @throws si el valor de la fecha no tiene el formato dd-MM-yyyy
      */
     public void setFechaFinalizacion(String fechaFinalizacion) throws ParseException {
         this.fechaFin = Utils.testStringNullOrEmptyOrWhitespaceAndSet(fechaFinalizacion, "Campo fecha fin vacío");
