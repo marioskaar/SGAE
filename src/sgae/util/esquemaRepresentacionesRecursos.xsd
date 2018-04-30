@@ -88,6 +88,7 @@
 				<xs:element name="cif" type="xs:string"/>
 				<xs:element name="nombre" type="xs:string"/>
 				<xs:element name="fechaCreacion" type="xs:string"/>
+				<xs:element name="ejemplaresVendidos" type="xs:string"/>
 				<xs:element name="uri1" type ="sgaerestutillink:link"/>
 				<xs:element name="uri2" type ="sgaerestutillink:link"/>
 			</xs:sequence>

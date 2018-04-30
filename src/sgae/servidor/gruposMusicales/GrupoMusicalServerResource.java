@@ -14,6 +14,7 @@ import org.restlet.resource.Get;
 import org.restlet.resource.ResourceException;
 import org.restlet.resource.ServerResource;
 
+import sgae.nucleo.gruposMusicales.Album;
 import sgae.nucleo.gruposMusicales.ControladorGruposMusicales;
 import sgae.nucleo.gruposMusicales.ExcepcionGruposMusicales;
 import sgae.nucleo.personas.ExcepcionPersonas;
@@ -64,7 +65,11 @@ public class GrupoMusicalServerResource extends ServerResource{
   		try{
   			//Dar la informacion del grupo musical
   			result.append(controladorGruposMusicales.verGrupoMusical(this.cif));
-  			result.append("URI: albumes/\nURI: miembros/");
+  			int eV = 0;
+  			for(Album a : controladorGruposMusicales.recuperarAlbumes(this.cif))
+  				eV=eV + a.getEjemplaresVendidos();
+  			result.append(eV);
+  			result.append("URI: albumes/\nURI: miembros");
   		}catch(ExcepcionGruposMusicales a){
   			//Si no existe el cif del grupo
   			throw new ResourceException(Status.CLIENT_ERROR_NOT_FOUND,a.getCausaFallo());
@@ -91,9 +96,13 @@ public class GrupoMusicalServerResource extends ServerResource{
   			grupoMusicalXML.setCif(this.cif);
   			grupoMusicalXML.setNombre(grupoMusical.getNombre());
   			grupoMusicalXML.setFechaCreacion(grupoMusical.getFechaCreacion());
+			int eV = 0;
+			for(Album a : controladorGruposMusicales.recuperarAlbumes(this.cif))
+				eV=eV+a.getEjemplaresVendidos();
+			grupoMusicalXML.setEjemplaresVendidos(Integer.toString(eV));
   			Link link1 = new Link();
   			Link link2 = new Link();
-			link1.setHref("miembros/");
+			link1.setHref("miembros");
 			link1.setTitle("Miembros");
 			link1.setType("simple");
 			link2.setHref("albumes/");
@@ -118,7 +127,7 @@ public class GrupoMusicalServerResource extends ServerResource{
 	 * @param data datos de entrada de un grupo musical.
 	 * @return una cadena de texto con el recurso grupo musical que ha sido creado o modificado.
 	 * @throws ResourceException si la fecha de creación introducida no se encuentra en el formato correcto.
-	 * O si el grupo musical existe al intentar cambiarlo se modifica.
+	 * O si el grupo musical no existe al intentar modificarlo.
 	 * O al aniadir un miembro a un grupo musical y el dni introducido no
 	 *  esta registrado en el sistema.
 	 */

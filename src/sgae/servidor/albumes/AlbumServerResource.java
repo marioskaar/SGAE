@@ -22,10 +22,10 @@ import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Map;
 /**
- * Clase que recoge las caracter�sticas del recurso �lbum y 
- * los m�todos para consultar dichas caracter�sticas en formato texto plano y en HTML y
- *  para la modificaci�n en formulario HTML (con negociaci�n de contenidos).
- * @author Mario Calle Mart�n y Raquel P�rez Garc�a.M�ster en Ingenier�a de Telecomunicaciones.
+ * Clase que recoge las caracteristicas del recurso album y
+ * los metodos para consultar dichas caracteristicas en formato texto plano y en HTML y
+ *  para la modificacion en formulario HTML (con negociacion de contenidos).
+ * @author Mario Calle Martin y Raquel Perez Garcia.Master en Ingenieria de Telecomunicaciones.
  * @version 1.0
  *
  */
@@ -39,10 +39,10 @@ public class AlbumServerResource extends ServerResource{
     private String idAlbum;
     
     /**
-	 * M�todo que realiza la inicializaci�n est�ndar del recurso �lbum.
+	 * Metodo que realiza la inicializacion estandar del recurso album.
 	 * cif Se obtiene el cif del grupo musical introducido.
-	 * idAlbum Se obtiene el identificador del �lbum introducido.
-	 * @throws ResourceException si no se puede realizar la inicializaci�n.
+	 * idAlbum Se obtiene el identificador del album introducido.
+	 * @throws ResourceException si no se puede realizar la inicializacion.
 	 * 
 	 */
 
@@ -57,13 +57,13 @@ public class AlbumServerResource extends ServerResource{
         this.idAlbum = getAttribute("albumId");
     }
     /**
-	 * M�todo que realiza una operaci�n GET sobre el recurso �lbum en formato texto plano y HTML.
+	 * Metodo que realiza una operacion GET sobre el recurso album en formato texto plano y HTML.
 	 * 
-	 * @param variant nos indica si la petici�n es en formato texto plano o HTML.
-	 * @return representaci�n del recurso �lbum en texto plano o HTML.
+	 * @param variant nos indica si la peticion es en formato texto plano o HTML.
+	 * @return representacion del recurso album en texto plano o HTML.
 	 * @throws ResourceException si no existe un grupo musical registrado con el cif introducido.
-	 * O si no existe el �lbum con el idAlbum introducido.
-	 * O si se produce alg�n error en la generaci�n del documento HTML.
+	 * O si no existe el lbum con el idAlbum introducido.
+	 * O si se produce algun error en la generacion del documento HTML.
 	 */   
 
     //Metodo get con negociacion de contenido
@@ -128,12 +128,12 @@ public class AlbumServerResource extends ServerResource{
         return result;
     }
     /**
-	 * M�todo que realiza una operaci�n DELETE sobre el recurso �lbum.
+	 * Metodo que realiza una operacion DELETE sobre el recurso album.
 	 * 
-	 * @param variant nos indica el formato de la petici�n.
-	 * @return cadena de texto que nos indica el �lbum que ha sido eliminado del sistema..
+	 * @param variant nos indica el formato de la peticion.
+	 * @return cadena de texto que nos indica el album que ha sido eliminado del sistema..
 	 * @throws ResourceException si no existe un grupo musical registrado con el cif introducido.
-	 * O si no existe un �lbum con el idAlbum introducido.
+	 * O si no existe un album con el idAlbum introducido.
 	 */
     //Metodo Delete
     @Override
@@ -156,14 +156,14 @@ public class AlbumServerResource extends ServerResource{
         return result;
     }
     /**
-	 * M�todo que realiza una operaci�n PUT sobre el recurso �lbum en formato HTML.
+	 * Metodo que realiza una operacion PUT sobre el recurso album en formato HTML.
 	 * 
 	 * @param data datos que se introducen en el formulario.
-	 * @param variant nos indica el formato de la petici�n.
-	 * @return representaci�n del recurso �lbum modificado en formato HTML.
-	 * @throws ResourceException si el formato de la fecha de publicaci�n es incorrecto.
+	 * @param variant nos indica el formato de la peticion.
+	 * @return representacion del recurso album modificado en formato HTML.
+	 * @throws ResourceException si el formato de la fecha de publicacion es incorrecto.
 	 * O si no existe un grupo musical registrado con el cif introducido.
-	 * O si no existe un �lbum con el idAlbum introducido.
+	 * O si no existe un album con el idAlbum introducido.
 	 */
 
     //Metodo Put para la modificacion del album
