@@ -106,7 +106,7 @@ public class AlbumServerResource extends ServerResource{
                 albumHTML.setEjemplaresVendidos(a.getEjemplaresVendidos());
                 //URI
                 Link link = new Link();
-                link.setHref(this.idAlbum+"/pistas/");
+                link.setHref("./pistas/");
                 link.setTitle("Pistas");
                 link.setType("simple");
                 albumHTML.setUri(link);
