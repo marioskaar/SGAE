@@ -22,6 +22,7 @@ import sgae.nucleo.personas.Persona;
 import sgae.util.generated.GrupoMusical;
 import sgae.util.generated.Link;
 import sgae.servidor.aplicacion.SGAEServerApplication;
+
 /**
  * Clase que recoge las características del recurso Grupo Musical y 
  * los métodos para consultar dichas características en formato texto plano y en XML y 
@@ -30,40 +31,36 @@ import sgae.servidor.aplicacion.SGAEServerApplication;
  * @version 1.0
  *
  */
-
 public class GrupoMusicalServerResource extends ServerResource{
 	//Obtenemos la referencia de la aplicacion
 	private SGAEServerApplication ref = (SGAEServerApplication)getApplication();
+
 	/**
 	 * ControladorGruposMusicales referencia al objeto de la clase SGAEServerApplication.
 	 */
-	//Objeto de la clase ControladorGruposMusicales que hace referencia al instanciado en la clase SGAEServerApplication
 	private ControladorGruposMusicales controladorGruposMusicales = ref.getControladorGruposMusicales();
+
 	/**
 	 * CIF del grupo musical.
 	 */
-	//cif del grupo musical
 	private String cif;
+
 	/**
 	 * Método que realiza la inicialización estándar del recurso Grupo Musical.
 	 * Se obtiene el cif del grupo musical introducido.
 	 *
 	 */
-
-	//Tareas a realizar en la inicializacion estandar del recurso
-	// obtener el cif del grupo
 	@Override
 	protected void doInit() throws ResourceException{
 		cif = getAttribute("cif");
 	}
+
 	/**
 	 * Método que realiza una operación GET sobre el recurso Grupo Musical en formato texto plano.
 	 *
 	 * @return una cadena de texto con la representación del recurso grupo musical en texto plano.
 	 * @throws ResourceException 404 NOT FOUND si no existe un grupo musical registrado con el cif introducido.
 	 */
-
-	//Metodo GET en texto plano
 	@Get("txt")
 	public String represent() {
 		StringBuilder result = new StringBuilder();
@@ -83,14 +80,13 @@ public class GrupoMusicalServerResource extends ServerResource{
 
 		return result.toString();
 	}
+
 	/**
 	 * Método que realiza una operación GET sobre el recurso Grupo Musical en formato XML utilizando la API JAXB..
 	 *
 	 * @return representación del recurso grupo musical en XML.
 	 * @throws ResourceException 404 NOT FOUND si no existe un grupo musical registrado con el cif introducido.
 	 */
-
-	//Metodo GET en formato XML
 	@Get("xml")
 	public Representation toXml() {
 
@@ -127,6 +123,7 @@ public class GrupoMusicalServerResource extends ServerResource{
 		result.setFormattedOutput(true);
 		return result;
 	}
+
 	/**
 	 * Método que realiza una operación PUT sobre el recurso Grupo Musical en formato formulario HTML.
 	 *
@@ -135,11 +132,11 @@ public class GrupoMusicalServerResource extends ServerResource{
 	 * @throws ResourceException 201 CREATED si el grupo musical se ha creado con éxito,
 	 * 200 OK si el grupo musical se ha modificado con éxito,
 	 * 400 BAD REQUEST si la fecha de creación introducida no se encuentra en el formato correcto,
-	 * 404 NOT FOUND si el grupo musical no existe al intentar modificarlo
+	 * o falta alguno de los parametros de entrada.
+	 * 404 NOT FOUND si el grupo musical no existe al intentar modificarlo,
 	 * o al añadir un miembro a un grupo musical y el dni introducido no
 	 * esta registrado en el sistema.
 	 */
-	//Metodo put para la creacion de un grupo musical, su modificacion y la adiccion de miembros
 	@Put("form-data")
 	public String store(Representation data) {
 		StringBuilder result = new StringBuilder();
@@ -223,14 +220,13 @@ public class GrupoMusicalServerResource extends ServerResource{
 		}
 		return result.toString();
 	}
+
 	/**
 	 * Método que realiza una operación DELETE sobre el recurso Grupo Musical.
 	 *
 	 * @return cadena de texto que nos indica el grupo musical que ha sido eliminado del sistema.
 	 * @throws ResourceException 404 NOT FOUND si el cif no coincide con ningún grupo musical del sistema.
 	 */
-
-	//Metodo para borrar un grupo musical
 	@Delete
 	public String remove(){
 		String result;

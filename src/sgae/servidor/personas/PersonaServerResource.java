@@ -17,6 +17,7 @@ import sgae.servidor.aplicacion.SGAEServerApplication;
 
 import sgae.util.generated.Persona;
 import java.text.ParseException;
+
 /**
  * Clase que recoge las características del recurso Persona y 
  * los métodos para consultar dichas características en formato texto plano y en XML y 
@@ -31,33 +32,28 @@ public class PersonaServerResource extends ServerResource {
     /**
      * ControladorPersonas referencia al objeto de la clase SGAEServerApplication.
      */
-    //Objeto de la clase ControladorPersonas que hace referencia al instanciado en la clase SGAEServerApplication
     private ControladorPersonas controladorPersonas = ref.getControladorPersonas();
     /**
      * DNI de la persona asociada al propio recurso.
      */
-    //Dni de la persona
     private String dni;
+
     /**
      * Método que realiza la inicialización estándar del recurso Persona.
      * Se obtiene el dni introducido.
      *
      */
-
-    //Tareas a realizar en la inicializacion estandar del recurso
-    // se obtiene el dni introducido
     @Override
     protected void doInit() throws ResourceException {
         dni = getAttribute("dni");
     }
+
     /**
      * Método que realiza una operación GET sobre el recurso Persona en formato texto plano.
      *
      * @return una cadena de texto con la representación del recurso Persona en texto plano.
      * @throws ResourceException 404 NOT FOUND si no existe una persona registrada con el dni introducido.
      */
-
-    //Metodo GET en texto plano
     @Get("txt")
     public String represent() {
         StringBuilder result = new StringBuilder();
@@ -72,14 +68,13 @@ public class PersonaServerResource extends ServerResource {
         }
         return result.toString();
     }
+
     /**
      * Método que realiza una operación GET sobre el recurso Persona en formato XML utilizando la API JAXB..
      *
      * @return representación del recurso Persona en XML.
      * @throws ResourceException 404 NOT FOUND si no existe una persona registrada con el dni introducido.
      */
-
-    //Metodo GET en formato XML
     @Get("xml")
     public Representation toXml() {
 
@@ -103,6 +98,7 @@ public class PersonaServerResource extends ServerResource {
         result.setFormattedOutput(true);
         return result;
     }
+
     /**
      * Método que realiza una operación PUT sobre el recurso Persona en formato formulario HTML.
      *
@@ -111,14 +107,12 @@ public class PersonaServerResource extends ServerResource {
      * @throws ResourceException 400 BAD REQUEST si no se introducen todos los datos de la persona,
      * 201 CREATED si la persona se ha creado correctamente,
      * 400 BAD REQUEST si la fecha de nacimiento introducida no se encuentra en el formato correcto.
-     * O si la persona existe al intentar crearla se modifica.
+     * Si la persona existe, al intentar crearla se modifica.
      * 200 OK si la persona se ha modificado correctamente,
      * 400 BAD REQUEST si la fecha de nacimiento introducida no se encuentra en el formato correcto,
      * 500 INTERNAL SERVER ERROR si se produce un error en el servidor de la aplicación.
      *
      */
-
-    //Metodo put para registrar personas o modificarlas
     @Put("form-data")
     public String store(Representation data) {
         StringBuilder result = new StringBuilder();
@@ -158,6 +152,7 @@ public class PersonaServerResource extends ServerResource {
         }
         return result.toString();
     }
+
     /**
      * Método que realiza una operación DELETE sobre el recurso Persona.
      *
@@ -165,7 +160,6 @@ public class PersonaServerResource extends ServerResource {
      * @throws ResourceException 404 NOT FOUND si el dni no coincide con ninguna persona del sistema
      * o 204 NO CONTENT si la persona se ha eliminado correctamente.
      */
-    //Metodo delete para eliminar una persona
     @Delete
     public String remove(){
         StringBuilder result = new StringBuilder();

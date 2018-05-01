@@ -13,6 +13,7 @@ import sgae.util.generated.GrupoMusicalInfoBreve;
 import sgae.util.generated.Link;
 import sgae.servidor.aplicacion.SGAEServerApplication;
 import sgae.util.generated.GruposMusicales;
+
 /**
  * Clase que recoge las características del recurso Grupos Musicales y 
  * los métodos para consultar dichas características en formato texto plano y en XML.
@@ -25,14 +26,13 @@ public class GruposMusicalesServerResource extends ServerResource{
 	private SGAEServerApplication ref = (SGAEServerApplication)getApplication();
 	//Objeto de la clase ControladorGruposMusicales que hace referencia al instanciado en la clase SGAEServerApplication
 	private ControladorGruposMusicales controladorGruposMusicales = ref.getControladorGruposMusicales();
+
 	/**
 	 * Método que realiza una operación GET sobre el recurso Grupos Musicales en formato texto plano.
 	 *
 	 * @return cadena de texto con la representación del recurso grupos musicales en texto plano.
 	 */
-	//Método GET en texto plano
 	@Get("txt")
-	//Obtener una representación de la lista de grupos musicales del sistema
 	public String represent() {
 		StringBuilder result = new StringBuilder();
 
@@ -40,6 +40,7 @@ public class GruposMusicalesServerResource extends ServerResource{
 		//No Content en la respuesta
 		if(controladorGruposMusicales.recuperarGruposMusicales().size()==0) {
 			getResponse().setStatus(Status.SUCCESS_NO_CONTENT,"No hay grupos registrados");
+			return null;
 		}else{
 			//Para cada grupo almacenado en la lista, devolvemos su infobreve
 			for (sgae.nucleo.gruposMusicales.GrupoMusical gm : controladorGruposMusicales.recuperarGruposMusicales()){
@@ -49,12 +50,12 @@ public class GruposMusicalesServerResource extends ServerResource{
 		}
 		return result.toString();
 	}
+
 	/**
 	 * Método que realiza una operación GET sobre el recurso Grupos Musicales en formato XML utilizando la API JAXB.
 	 *
 	 * @return  representación del recurso grupos musicales en formato XML.
 	 */
-	//Método GET en formato XML
 	@Get("xml")
 	public Representation toXml() {
 		GruposMusicales gmsXML = new GruposMusicales();
@@ -63,6 +64,7 @@ public class GruposMusicalesServerResource extends ServerResource{
 		//No Content en la respuesta
 		if(controladorGruposMusicales.recuperarGruposMusicales().size()==0) {
 			getResponse().setStatus(Status.SUCCESS_NO_CONTENT,"No hay grupos registrados");
+			return null;
 		}else{
 			for (sgae.nucleo.gruposMusicales.GrupoMusical gm : controladorGruposMusicales.recuperarGruposMusicales()){
 				//Para cada grupo se genera un objeto de la clase auxiliar de representacion en xml

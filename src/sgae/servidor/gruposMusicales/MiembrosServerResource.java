@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 /**
  * Clase que recoge las características del recurso Miembros y 
  * los métodos para consultar dichas características en formato texto plano y en HTML
@@ -31,15 +32,15 @@ import java.util.Map;
 public class MiembrosServerResource extends ServerResource {
     //Obtenemos la referencia de la aplicacion
     private SGAEServerApplication ref = (SGAEServerApplication)getApplication();
+
     /**
      * ControladorGruposMusicales referencia al objeto de la clase SGAEServerApplication.
      */
-    //Objeto de la clase ControladorGruposMusicales que hace referencia al instanciado en la clase SGAEServerApplication
     private ControladorGruposMusicales controladorGruposMusicales = ref.getControladorGruposMusicales();
+
     /**
      * CIF del grupo musical.
      */
-    //Cif del grupo musical
     private String cif;
 
     /**
@@ -47,15 +48,13 @@ public class MiembrosServerResource extends ServerResource {
      * Se obtiene el cif del grupo musical introducido.
      *
      */
-
-    //Tareas a realizar en la inicializacion estandar del recurso
-    //con negociacion de contenidos y obtencion del cif
     @Override
     protected void doInit()throws ResourceException {
         getVariants().add(new Variant(MediaType.TEXT_PLAIN));
         getVariants().add(new Variant (MediaType.TEXT_HTML));
         this.cif = getAttribute("cif");
     }
+
     /**
      * Método que realiza una operación GET sobre el recurso Miembros con negociación de contenidos.
      *
@@ -65,7 +64,6 @@ public class MiembrosServerResource extends ServerResource {
      * 500 INTERNAL SERVER ERROR si se produce un error al generar el documento HTML
      * o 406 NOT ACCEPTABLE si el formato MediaType no es soportado por el recurso.
      */
-    //Get con negociacion de contenido, txt y html
     @Override
     protected Representation get(Variant variant)throws ResourceException{
         Representation result = null;

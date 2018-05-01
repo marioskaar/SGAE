@@ -25,6 +25,7 @@ import sgae.servidor.aplicacion.SGAEServerApplication;
 import sgae.util.generated.AlbumInfoBreve;
 import sgae.util.generated.Albumes;
 import sgae.util.generated.Link;
+
 /**
  * Clase que recoge las características del recurso Álbumes y 
  * los métodos para consultar dichas características en formato texto plano y en HTML y
@@ -33,20 +34,19 @@ import sgae.util.generated.Link;
  * @version 1.0
  *
  */
-
 public class AlbumesServerResource extends ServerResource {
 
 	//Obtenemos la referencia de la aplicacion
 	private SGAEServerApplication ref = (SGAEServerApplication)getApplication();
+
 	/**
 	 * ControladorGruposMusicales referencia al objeto de la clase SGAEServerApplication.
 	 */
-	//Objeto de la clase ControladorGruposMusicales que hace referencia al instanciado en la clase SGAEServerApplication
 	private ControladorGruposMusicales controladorGruposMusicales = ref.getControladorGruposMusicales();
+
 	/**
 	 * CIF del grupo musical.
 	 */
-	//Cif del grupo
 	private String cif;
 
 	/**
@@ -55,9 +55,6 @@ public class AlbumesServerResource extends ServerResource {
 	 * @throws ResourceException si no se puede realizar la inicialización.
 	 *
 	 */
-
-	//Tareas a realizar en la inicializacion estandar del recurso
-	//con negociacion de contenidos y obtencion del cif
 	@Override
 	protected void doInit()throws ResourceException{
 		getVariants().add(new Variant (MediaType.TEXT_PLAIN));
@@ -65,6 +62,7 @@ public class AlbumesServerResource extends ServerResource {
 		getVariants().add(new Variant(MediaType.APPLICATION_WWW_FORM));
 		this.cif = getAttribute("cif");
 	}
+
 	/**
 	 * Método que realiza una operación GET sobre el recurso Álbumes en formato texto plano y HTML.
 	 *
@@ -74,7 +72,6 @@ public class AlbumesServerResource extends ServerResource {
 	 * 500 INTERNAL SERVER ERROR si se produce algún error en la generación del documento HTML
 	 * o 406 NOT ACCEPTABLE si el formato MediaType no esta soportado por el recurso.
 	 */
-	//Get con negociacion de contenido, txt y html
 	@Override
 	protected Representation get(Variant variant)throws ResourceException{
 		Representation result = null;
@@ -133,6 +130,7 @@ public class AlbumesServerResource extends ServerResource {
 		}
 		return result;
 	}
+
 	/**
 	 * Método que realiza una operación POST sobre el recurso Álbumes con negociación de contenidos.
 	 *
@@ -142,8 +140,6 @@ public class AlbumesServerResource extends ServerResource {
 	 * @throws ResourceException 400 BAD REQUEST si la fecha de publicación se ha introducido en un formato incorrecto.
 	 * o 404 NOT FOUND si no existe un grupo musical registrado con el cif introducido.
 	 */
-
-	//Metodo Post para la creacion de albumes, con negociacion de contenido
 	@Override
 	public Representation post(Representation data, Variant variant){
 		Representation result = null;

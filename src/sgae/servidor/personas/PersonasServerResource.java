@@ -13,6 +13,7 @@ import sgae.util.generated.Link;
 import sgae.servidor.aplicacion.SGAEServerApplication;
 import sgae.util.generated.PersonaInfoBreve;
 import sgae.util.generated.Personas;
+
 /**
  * Clase que recoge las características del recurso Personas y 
  * los métodos para consultar dichas características en formato texto plano y en XML.
@@ -20,21 +21,20 @@ import sgae.util.generated.Personas;
  * @version 1.0
  *
  */
-
 public class PersonasServerResource extends ServerResource{
 	//Obtenemos la referencia de la aplicacion
 	private SGAEServerApplication ref = (SGAEServerApplication)getApplication();
 	/**
 	 * ControladorPersonas referencia al objeto de la clase SGAEServerApplication.
 	 */
-	//Objeto de la clase ControladorPersonas que hace referencia al instanciado en la clase SGAEServerApplication
 	private ControladorPersonas controladorPersonas = ref.getControladorPersonas();
+
 	/**
 	 * Método que realiza una operación GET sobre el recurso Personas en formato texto plano.
 	 *
-	 * @return cadena de texto con la representación del recurso Personas en texto plano.
+	 * @return cadena de texto con la representación del recurso Personas en texto plano. Devuelve null y
+     * codigo 204 NO_CONTENT si la coleccion esta vacia.
 	 */
-	//Metodo GET en texto plano
 	@Get("txt")
 	public String represent() {
 		StringBuilder result = new StringBuilder();
@@ -43,6 +43,7 @@ public class PersonasServerResource extends ServerResource{
 		//No Content en la respuesta
 		if(controladorPersonas.recuperarPersonas().size()==0){
 			getResponse().setStatus(Status.SUCCESS_NO_CONTENT,"No hay personas registradas");
+			return null;
 		}else {
 			//generacion del documento en texto plano con el listado de las personas
 			for (sgae.nucleo.personas.Persona p : controladorPersonas.recuperarPersonas()) {
@@ -52,13 +53,13 @@ public class PersonasServerResource extends ServerResource{
 		}
 		return result.toString();
 	}
+
 	/**
 	 * Método que realiza una operación GET sobre el recurso Personas en formato XML utilizando la API JAXB.
 	 *
-	 * @return representación del recurso Personas en formato XML.
+	 * @return representación del recurso Personas en formato XML. Devuelve null y codigo 204 NO_CONTENT
+     * si la coleccion esta vacia
 	 */
-
-	//Metodo GET en formato XML
 	@Get("xml")
 	public Representation toXml() throws ResourceException{
 
@@ -70,6 +71,7 @@ public class PersonasServerResource extends ServerResource{
 		//Si no hay personas, se devuelve el estado 204
 		if(controladorPersonas.recuperarPersonas().size()==0){
 			getResponse().setStatus(Status.SUCCESS_NO_CONTENT,"No hay personas registradas");
+			return null;
 		}else {
 			for (sgae.nucleo.personas.Persona p : controladorPersonas.recuperarPersonas()) {
 				//Para cada persona se genera un objeto de la clase auxiliar de representacion en xml

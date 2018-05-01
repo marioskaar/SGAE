@@ -102,7 +102,7 @@ public class RootServerResource extends ServerResource{
 			//discograficas
 			Node discograficas = doc.createElement("Discograficas");
 			Element linkD = doc.createElement("link");
-			linkD.setAttribute("title", "Discográficas");
+			linkD.setAttribute("title", "Discograficas");
 			linkD.setAttribute("type", "simple");
 			linkD.setAttribute("href", "discograficas/");
 			discograficas.appendChild(linkD);

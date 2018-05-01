@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Map;
+
 /**
  * Clase que recoge las caracteristicas del recurso album y
  * los metodos para consultar dichas caracteristicas en formato texto plano y en HTML y
@@ -32,16 +33,17 @@ import java.util.Map;
 public class AlbumServerResource extends ServerResource{
     //Obtenemos la referencia de la aplicacion
     private SGAEServerApplication ref = (SGAEServerApplication)getApplication();
+
     /**
      * ControladorGruposMusicales referencia al objeto de la clase SGAEServerApplication.
      */
-    //Objeto de la clase ControladorGruposMusicales que hace referencia al instanciado en la clase SGAEServerApplication
     private ControladorGruposMusicales controladorGruposMusicales = ref.getControladorGruposMusicales();
+
     /**
      * CIF el identificador del grupo musical.
      */
-    //cif del grupo e identificador del album
     private String cif;
+
     /**
      * idAlbum el identificador del álbum.
      */
@@ -54,9 +56,6 @@ public class AlbumServerResource extends ServerResource{
      * @throws ResourceException si no se puede realizar la inicialización.
      *
      */
-
-    //Tareas a realizar en la inicialización estándar del recurso
-    //con negociacion de contenidos y obtención del cif e identificador del álbum.
     @Override
     protected void doInit()throws ResourceException {
         getVariants().add(new Variant(MediaType.TEXT_PLAIN));
@@ -65,6 +64,7 @@ public class AlbumServerResource extends ServerResource{
         this.cif = getAttribute("cif");
         this.idAlbum = getAttribute("albumId");
     }
+
     /**
      * Método que realiza una operación GET sobre el recurso Álbum en formato texto plano y HTML.
      *
@@ -75,8 +75,6 @@ public class AlbumServerResource extends ServerResource{
      * 500 INTERNAL SERVER ERROR si se produce algun error en la generacion del documento HTML
      * o 406 NOT ACCEPTABLE si el formato MediaType no está soportado por el recurso.
      */
-
-    //Metodo get con negociacion de contenido
     @Override
     protected Representation get(Variant variant)throws ResourceException{
         Representation result = null;
@@ -137,6 +135,7 @@ public class AlbumServerResource extends ServerResource{
         }
         return result;
     }
+
     /**
      * Método que realiza una operación DELETE sobre el recurso Álbum.
      *
@@ -145,7 +144,6 @@ public class AlbumServerResource extends ServerResource{
      * @throws ResourceException 404 NOT FOUND si no existe un grupo musical registrado con el cif introducido.
      * o si no existe un álbum con el idAlbum introducido.
      */
-    //Metodo Delete
     @Override
     public Representation delete(Variant variant){
         Representation result = null;
@@ -165,6 +163,7 @@ public class AlbumServerResource extends ServerResource{
         }
         return result;
     }
+
     /**
      * Método que realiza una operación PUT sobre el recurso Álbum en formato HTML.
      *
@@ -175,8 +174,6 @@ public class AlbumServerResource extends ServerResource{
      * 404 NOT FOUND si no existe un grupo musical registrado con el cif introducido
      * o si no existe un álbum con el idAlbum introducido.
      */
-
-    //Metodo Put para la modificacion del album
     @Override
     public Representation put(Representation data, Variant variant){
         Representation result = null;

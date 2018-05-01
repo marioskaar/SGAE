@@ -21,6 +21,7 @@ import sgae.util.generated.Pista;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+
 /**
  * Clase que recoge las características del recurso Pista y 
  * los métodos para consultar dichas características en formato texto plano y en HTML y
@@ -32,20 +33,22 @@ import java.util.Map;
 public class PistaServerResource extends ServerResource{
     //Obtenemos la referencia de la aplicacion
     private SGAEServerApplication ref = (SGAEServerApplication)getApplication();
-    //Objeto de la clase ControladorGruposMusicales que hace referencia al instanciado en la clase SGAEServerApplication
+
     /**
      * ControladorGruposMusicales referencia al objeto de la clase SGAEServerApplication.
      */
     private ControladorGruposMusicales controladorGruposMusicales = ref.getControladorGruposMusicales();
-    //Cif grupo, id album, id pista
+
     /**
      * CIF el identificador del grupo musical.
      */
     private String cif;
+
     /**
      * idAlbum el identificador del álbum.
      */
     private String idAlbum;
+
     /**
      * idPista el identificador de la pista.
      */
@@ -59,8 +62,6 @@ public class PistaServerResource extends ServerResource{
      * @throws ResourceException si no se puede realizar la inicialización.
      *
      */
-    //Tareas a realizar en la inicializacion estandar del recurso
-    //con negociacion de contenidos y obtenccion del cif, id album e id pista
     @Override
     protected void doInit()throws ResourceException {
         getVariants().add(new Variant(MediaType.TEXT_PLAIN));
@@ -70,6 +71,7 @@ public class PistaServerResource extends ServerResource{
         this.idAlbum = getAttribute("albumId");
         this.idPista = getAttribute("pistaId");
     }
+
     /**
      * Método que realiza una operación GET sobre el recurso Pista en formato texto plano y HTML.
      *
@@ -80,7 +82,6 @@ public class PistaServerResource extends ServerResource{
      * 500 INTERNAL SERVER ERROR si se produce un error al generar el documento HTML o
      * 406 NOT ACCEPTABLE si el formato MediaType no está soportado por el recurso.
      */
-    //Metodo Get con negociacion de contenidos
     @Override
     protected Representation get(Variant variant)throws ResourceException{
         Representation result = null;
@@ -139,6 +140,7 @@ public class PistaServerResource extends ServerResource{
         }
         return result;
     }
+
     /**
      * Método que realiza una operación DELETE sobre el recurso Pista.
      *
@@ -147,7 +149,6 @@ public class PistaServerResource extends ServerResource{
      * @throws ResourceException 404 NOT FOUND si no existe un grupo musical registrado con el cif introducido,
      * si no existe un álbum con el idAlbum introducido o si no existe una pista con el idPista introducido.
      */
-    //Metodo Delete
     @Override
     public Representation delete(Variant variant){
         Representation result = null;
