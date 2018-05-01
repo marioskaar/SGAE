@@ -217,7 +217,7 @@ public class ClienteSGAE  {
         System.out.println("\n----Inicio de creacion de grupos musicales----");
         //Creacion de grupos musicales
         //gmJamiroquai
-        clientResource.getRequest().setResourceRef(uriBase+"gruposmusicales/"+gmJamiroquai);
+        clientResource.getRequest().setResourceRef(uriBase+"gruposmusicales/"+gmJamiroquai+"/");
         try {
             Form grupo = new Form();
             grupo.add("nombre","Jamiroquai");
@@ -234,7 +234,7 @@ public class ClienteSGAE  {
                     + "\nDescripcion: " + a.getStatus().getDescription());
         }
         //gmBlur
-        clientResource.getRequest().setResourceRef(uriBase+"gruposmusicales/"+gmBlur);
+        clientResource.getRequest().setResourceRef(uriBase+"gruposmusicales/"+gmBlur+"/");
         try {
             Form grupo = new Form();
             grupo.add("nombre","Blur");
@@ -275,7 +275,7 @@ public class ClienteSGAE  {
 
         System.out.println("\n----Inicio de aniadir miembros a un grupo----");
         //aniadir miembro al grupo Jamiroquoai
-        clientResource.getRequest().setResourceRef(uriBase+"gruposmusicales/"+gmJamiroquai+"");
+        clientResource.getRequest().setResourceRef(uriBase+"gruposmusicales/"+gmJamiroquai+"/");
         try {
             Form grupo = new Form();
             grupo.add("dni",pBart);
@@ -296,7 +296,7 @@ public class ClienteSGAE  {
                         +"\nDescripcion" +a.getStatus().getDescription());
         }
         //aniadir miembro al grupo Blur
-        clientResource.getRequest().setResourceRef(uriBase+"gruposmusicales/"+gmBlur+"");
+        clientResource.getRequest().setResourceRef(uriBase+"gruposmusicales/"+gmBlur+"/");
         try {
             Form grupo = new Form();
             grupo.add("dni",pCarl);
@@ -316,7 +316,7 @@ public class ClienteSGAE  {
 
         System.out.println("\n----Inicio de eliminar miembros a un grupo----");
         //eliminar dos miembros de Jamiroquai
-        clientResource.getRequest().setResourceRef(uriBase+"gruposmusicales/"+gmJamiroquai+"");
+        clientResource.getRequest().setResourceRef(uriBase+"gruposmusicales/"+gmJamiroquai+"/");
         try {
             Form grupo = new Form();
             grupo.add("dni",pBart);
@@ -335,7 +335,7 @@ public class ClienteSGAE  {
                     +"\nDescripcion" +a.getStatus().getDescription());
         }
         //eliminar miembro al grupo Blur
-        clientResource.getRequest().setResourceRef(uriBase+"gruposmusicales/"+gmBlur+"");
+        clientResource.getRequest().setResourceRef(uriBase+"gruposmusicales/"+gmBlur+"/");
         try {
             Form grupo = new Form();
             grupo.add("dni",pCarl);

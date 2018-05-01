@@ -47,10 +47,10 @@ public class SGAEServerApplication extends Application{
 		router.attach("/personas/",PersonasServerResource.class);
 		router.attach("/personas/{dni}",PersonaServerResource.class);
 		router.attach("/gruposmusicales/",GruposMusicalesServerResource.class);
-		router.attach("/gruposmusicales/{cif}",GrupoMusicalServerResource.class);
+		router.attach("/gruposmusicales/{cif}/",GrupoMusicalServerResource.class);
 		router.attach("/gruposmusicales/{cif}/miembros",MiembrosServerResource.class);
 		router.attach("/gruposmusicales/{cif}/albumes/",AlbumesServerResource.class);
-		router.attach("/gruposmusicales/{cif}/albumes/{albumId}",AlbumServerResource.class);
+		router.attach("/gruposmusicales/{cif}/albumes/{albumId}/",AlbumServerResource.class);
 		router.attach("/gruposmusicales/{cif}/albumes/{albumId}/pistas/",PistasServerResource.class);
 		router.attach("/gruposmusicales/{cif}/albumes/{albumId}/pistas/{pistaId}",PistaServerResource.class);
 		return router;

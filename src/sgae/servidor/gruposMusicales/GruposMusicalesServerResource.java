@@ -27,52 +27,52 @@ public class GruposMusicalesServerResource extends ServerResource{
 	private ControladorGruposMusicales controladorGruposMusicales = ref.getControladorGruposMusicales();
 	/**
 	 * Método que realiza una operación GET sobre el recurso Grupos Musicales en formato texto plano.
-	 * 
+	 *
 	 * @return cadena de texto con la representación del recurso grupos musicales en texto plano.
 	 */
 	//Método GET en texto plano
 	@Get("txt")
 	//Obtener una representación de la lista de grupos musicales del sistema
 	public String represent() {
-	    StringBuilder result = new StringBuilder();
+		StringBuilder result = new StringBuilder();
 
-	    //Si no hay ningun grupo musical registrado en la aplicacion devolvemos el estado
-        //No Content en la respuesta
+		//Si no hay ningun grupo musical registrado en la aplicacion devolvemos el estado
+		//No Content en la respuesta
 		if(controladorGruposMusicales.recuperarGruposMusicales().size()==0) {
 			getResponse().setStatus(Status.SUCCESS_NO_CONTENT,"No hay grupos registrados");
 		}else{
 			//Para cada grupo almacenado en la lista, devolvemos su infobreve
 			for (sgae.nucleo.gruposMusicales.GrupoMusical gm : controladorGruposMusicales.recuperarGruposMusicales()){
 				result.append("CIF: "+gm.getCif()+" Nombre: "+gm.getNombre()
-						+" Fecha Creacion: "+gm.getFechaCreacion()+" URI: gruposmusicales/"+gm.getCif()+"\n");
+						+" Fecha Creacion: "+gm.getFechaCreacion()+" URI: gruposmusicales/"+gm.getCif()+"/"+"\n");
 			}
 		}
 		return result.toString();
 	}
 	/**
 	 * Método que realiza una operación GET sobre el recurso Grupos Musicales en formato XML utilizando la API JAXB.
-	 * 
+	 *
 	 * @return  representación del recurso grupos musicales en formato XML.
 	 */
 	//Método GET en formato XML
 	@Get("xml")
 	public Representation toXml() {
 		GruposMusicales gmsXML = new GruposMusicales();
-        final List<GrupoMusicalInfoBreve> grupoMusicalInfoBreve = gmsXML.getGrupoMusicalInfoBreve();
-	    //Si no hay ningun grupo musical registrado en la aplicacion devolvemos el estado
-        //No Content en la respuesta
+		final List<GrupoMusicalInfoBreve> grupoMusicalInfoBreve = gmsXML.getGrupoMusicalInfoBreve();
+		//Si no hay ningun grupo musical registrado en la aplicacion devolvemos el estado
+		//No Content en la respuesta
 		if(controladorGruposMusicales.recuperarGruposMusicales().size()==0) {
 			getResponse().setStatus(Status.SUCCESS_NO_CONTENT,"No hay grupos registrados");
 		}else{
-	        for (sgae.nucleo.gruposMusicales.GrupoMusical gm : controladorGruposMusicales.recuperarGruposMusicales()){
-                //Para cada grupo se genera un objeto de la clase auxiliar de representacion en xml
-	        	GrupoMusicalInfoBreve gmXML = new GrupoMusicalInfoBreve();
-	            gmXML.setCif(gm.getCif());
+			for (sgae.nucleo.gruposMusicales.GrupoMusical gm : controladorGruposMusicales.recuperarGruposMusicales()){
+				//Para cada grupo se genera un objeto de la clase auxiliar de representacion en xml
+				GrupoMusicalInfoBreve gmXML = new GrupoMusicalInfoBreve();
+				gmXML.setCif(gm.getCif());
 				gmXML.setNombre(gm.getNombre());
 				gmXML.setFechaCreacion(gm.getFechaCreacion());
 				//Objeto link para asignar la URI
-	            Link link = new Link();
-	            link.setHref("gruposmusicales/"+gm.getCif());
+				Link link = new Link();
+				link.setHref("gruposmusicales/"+gm.getCif()+"/");
 				link.setTitle("GrupoMusical");
 				link.setType("simple");
 				gmXML.setUri(link);
@@ -81,9 +81,10 @@ public class GruposMusicalesServerResource extends ServerResource{
 			}
 		}
 		//Se genera el documento xml que se envia como respuesta
-        JaxbRepresentation<GruposMusicales> result = new JaxbRepresentation<GruposMusicales>(gmsXML);
+		JaxbRepresentation<GruposMusicales> result = new JaxbRepresentation<GruposMusicales>(gmsXML);
 		result.setFormattedOutput(true);
 		return result;
 	}
 }
+
 

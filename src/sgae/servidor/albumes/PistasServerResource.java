@@ -36,18 +36,27 @@ import java.util.Map;
 public class PistasServerResource extends ServerResource{
     //Obtenemos la referencia de la aplicacion
     private SGAEServerApplication ref = (SGAEServerApplication)getApplication();
+    /**
+     * ControladorGruposMusicales referencia al objeto de la clase SGAEServerResource.
+     */
     //Objeto de la clase ControladorGruposMusicales que hace referencia al instanciado en la clase SGAEServerApplication
     private ControladorGruposMusicales controladorGruposMusicales = ref.getControladorGruposMusicales();
     //cif e id album
+    /**
+     * CIF el identificador del grupo musical.
+     */
     private String cif;
+    /**
+     * albumID el identificador del álbum.
+     */
     private String albumId;
     /**
-	 * Método que realiza la inicialización estándar del recurso Pistass.
-	 * cif Se obtiene el cif del grupo musical introducido.
-	 * idAlbum Se obtiene el idAlbum del álbum introducido.
-	 * @throws ResourceException si no se puede realizar la inicialización.
-	 * 
-	 */
+     * Método que realiza la inicialización estándar del recurso Pistas.
+     * cif Se obtiene el cif del grupo musical introducido.
+     * idAlbum Se obtiene el idAlbum del álbum introducido.
+     * @throws ResourceException si no se puede realizar la inicialización.
+     *
+     */
     //Tareas a realizar en la inicializacion estandar del recurso
     //con negociacion de contenidos y obtencion del cif e id
     @Override
@@ -59,14 +68,15 @@ public class PistasServerResource extends ServerResource{
         this.albumId = getAttribute("albumId");
     }
     /**
-	 * Método que realiza una operación GET sobre el recurso Pistas en formato texto plano y HTML.
-	 * 
-	 * @param variant nos indica si la petición es en formato texto plano o HTML.
-	 * @return representación del recurso pistas en texto plano o HTML.
-	 * @throws ResourceException si no existe un grupo musical registrado con el cif introducido.
-     * O si no existe un álbum con el idAlbum introducido.
-	 * O si se produce algún error en la generación del documento HTML.
-	 */
+     * Método que realiza una operación GET sobre el recurso Pistas en formato texto plano y HTML.
+     *
+     * @param variant nos indica si la petición es en formato texto plano o HTML.
+     * @return representación del recurso Pistas en texto plano o HTML.
+     * @throws ResourceException 404 NOT FOUND si no existe un grupo musical registrado con el cif introducido o
+     * si no existe un álbum con el idAlbum introducido,
+     * 500 INTERNAL SERVER ERROR si se produce algún error en la generación del documento HTML,
+     * 406 NOT ACCEPTABLE si el formato MediaType no está sportado por el recurso.
+     */
     //Metodo Get con negociacion de contenido
     @Override
     protected Representation get(Variant variant)throws ResourceException{
@@ -133,15 +143,15 @@ public class PistasServerResource extends ServerResource{
         return result;
     }
     /**
-	 * Método que realiza una operación POST sobre el recurso Pistas con negociación de contenidos.
-	 * 
-	 * @param data datos que se introcen en el formulario HTML.
-	 * @param variant nos indica el formato de la petición.
-	 * @return representación del recurso pistas creado en formato HTML.
-	 * @throws ResourceException si no existe un grupo musical registrado con el cif introducido.
-	 * O si no existe un álbum con el idAlbum introducido.
-	 * O si los parámetros de la pista introducidos no son correctos.
-	 */
+     * Método que realiza una operación POST sobre el recurso Pistas con negociación de contenidos.
+     *
+     * @param data datos que se introcen en el formulario HTML.
+     * @param variant nos indica el formato de la petición.
+     * @return representación del recurso pistas creado en formato HTML.
+     * @throws ResourceException 404 NOT FOUND si no existe un grupo musical registrado con el cif introducido,
+     * o si no existe un álbum con el idAlbum introducido,
+     * 40O BAD REQUEST si los parámetros de la pista introducidos no son correctos.
+     */
 
     //Metodo Post para la creacion de pistas
     @Override

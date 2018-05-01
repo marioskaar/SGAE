@@ -33,20 +33,32 @@ public class PistaServerResource extends ServerResource{
     //Obtenemos la referencia de la aplicacion
     private SGAEServerApplication ref = (SGAEServerApplication)getApplication();
     //Objeto de la clase ControladorGruposMusicales que hace referencia al instanciado en la clase SGAEServerApplication
+    /**
+     * ControladorGruposMusicales referencia al objeto de la clase SGAEServerApplication.
+     */
     private ControladorGruposMusicales controladorGruposMusicales = ref.getControladorGruposMusicales();
     //Cif grupo, id album, id pista
+    /**
+     * CIF el identificador del grupo musical.
+     */
     private String cif;
+    /**
+     * idAlbum el identificador del álbum.
+     */
     private String idAlbum;
+    /**
+     * idPista el identificador de la pista.
+     */
     private String idPista;
 
     /**
-	 * Método que realiza la inicialización estándar del recurso Pista.
-	 * cif Se obtiene el cif del grupo musical introducido.
-	 * idAlbum Se obtiene el identificador del álbum introducido.
-	 * idPista Se obtiene el identificador de la pista introducido.
-	 * @throws ResourceException si no se puede realizar la inicialización.
-	 * 
-	 */
+     * Método que realiza la inicialización estándar del recurso Pista.
+     * cif Se obtiene el cif del grupo musical introducido.
+     * idAlbum Se obtiene el identificador del álbum introducido.
+     * idPista Se obtiene el identificador de la pista introducido.
+     * @throws ResourceException si no se puede realizar la inicialización.
+     *
+     */
     //Tareas a realizar en la inicializacion estandar del recurso
     //con negociacion de contenidos y obtenccion del cif, id album e id pista
     @Override
@@ -59,15 +71,15 @@ public class PistaServerResource extends ServerResource{
         this.idPista = getAttribute("pistaId");
     }
     /**
-	 * Método que realiza una operación GET sobre el recurso Pista en formato texto plano y HTML.
-	 * 
-	 * @param variant nos indica si la petición es en formato texto plano o HTML.
-	 * @return representación del recurso pista en texto plano o HTML.
-	 * @throws ResourceException si no existe un grupo musical registrado con el cif introducido.
-	 * O si no existe un álbum con el idAlbum introducido.
-	 * O si no existe una pista con el idPista introducido.
-	 * 
-	 */   
+     * Método que realiza una operación GET sobre el recurso Pista en formato texto plano y HTML.
+     *
+     * @param variant nos indica si la petición es en formato texto plano o HTML.
+     * @return representación del recurso Pista en texto plano o HTML.
+     * @throws ResourceException 404 NOT FOUND si no existe un grupo musical registrado con el cif introducido,
+     * si no existe un álbum con el idAlbum introducido o si no existe una pista con el idPista introducido,
+     * 500 INTERNAL SERVER ERROR si se produce un error al generar el documento HTML o
+     * 406 NOT ACCEPTABLE si el formato MediaType no está soportado por el recurso.
+     */
     //Metodo Get con negociacion de contenidos
     @Override
     protected Representation get(Variant variant)throws ResourceException{
@@ -128,14 +140,13 @@ public class PistaServerResource extends ServerResource{
         return result;
     }
     /**
-	 * Método que realiza una operación DELETE sobre el recurso Pista.
-	 * 
-	 * @param variant nos indica el formato de la petición.
-	 * @return cadena de texto que nos indica la pista que ha sido eliminada del sistema..
-	 * @throws ResourceException si no existe un grupo musical registrado con el cif introducido.
-	 * O si no existe un álbum con el idAlbum introducido.
-	 * O si no existe una pista con el idPista introducido.
-	 */
+     * Método que realiza una operación DELETE sobre el recurso Pista.
+     *
+     * @param variant nos indica el formato de la petición.
+     * @return cadena de texto que nos indica la Pista que ha sido eliminada del sistema..
+     * @throws ResourceException 404 NOT FOUND si no existe un grupo musical registrado con el cif introducido,
+     * si no existe un álbum con el idAlbum introducido o si no existe una pista con el idPista introducido.
+     */
     //Metodo Delete
     @Override
     public Representation delete(Variant variant){

@@ -28,7 +28,7 @@ import org.w3c.dom.Element;
 public class RootServerResource extends ServerResource{
 	/**
 	 * Constructor con los atributos del recurso raíz.
-	 * 
+	 *
 	 */
 	public RootServerResource(){
 		//En la api por defecto dice que esta a true...
@@ -36,7 +36,7 @@ public class RootServerResource extends ServerResource{
 	}
 	/**
 	 * Método que realiza una operación GET sobre el recurso Raíz en formato texto plano.
-	 * 
+	 *
 	 * @return cadena de texto con la representación del recurso raíz en texto plano.
 	 */
 	//Metodo Get en texto plano
@@ -55,13 +55,13 @@ public class RootServerResource extends ServerResource{
 
 		//Fijamos a mano los nombres y uris de los recursos un nivel por debajo del root
 		valor = "Nombre recurso: Grupos Musicales; URI relativo: gruposmusicales/"+"\n"
-		+ "Nombre recurso: Personas; URI relativo: personas/"+"\n"
-		+ "Nombre recurso: Discograficas; URI relativo: discograficas/";
+				+ "Nombre recurso: Personas; URI relativo: personas/"+"\n"
+				+ "Nombre recurso: Discograficas; URI relativo: discograficas/";
 		return valor;
 	}
 	/**
 	 * Método que realiza una operación GET sobre el recurso Raíz en formato XML utilizando la API DOM.
-	 * 
+	 *
 	 * @return representación del recurso raíz en formato XML.
 	 * @throws ResourceException si se produce un error en la creación del documento.
 	 */

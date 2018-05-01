@@ -34,20 +34,26 @@ import sgae.util.generated.Link;
  *
  */
 
- public class AlbumesServerResource extends ServerResource {
+public class AlbumesServerResource extends ServerResource {
 
 	//Obtenemos la referencia de la aplicacion
 	private SGAEServerApplication ref = (SGAEServerApplication)getApplication();
+	/**
+	 * ControladorGruposMusicales referencia al objeto de la clase SGAEServerApplication.
+	 */
 	//Objeto de la clase ControladorGruposMusicales que hace referencia al instanciado en la clase SGAEServerApplication
 	private ControladorGruposMusicales controladorGruposMusicales = ref.getControladorGruposMusicales();
+	/**
+	 * CIF del grupo musical.
+	 */
 	//Cif del grupo
 	private String cif;
-	
+
 	/**
 	 * Método que realiza la inicialización estándar del recurso Álbumes.
 	 * Se obtiene el cif del grupo musical introducido.
 	 * @throws ResourceException si no se puede realizar la inicialización.
-	 * 
+	 *
 	 */
 
 	//Tareas a realizar en la inicializacion estandar del recurso
@@ -64,8 +70,9 @@ import sgae.util.generated.Link;
 	 *
 	 * @param variant nos indica si la petición es en formato texto plano o HTML.
 	 * @return representación del recurso álbumes en texto plano o HTML.
-	 * @throws ResourceException si no existe un grupo musical registrado con el cif introducido.
-	 * o si se produce algún error en la generación del documento HTML.
+	 * @throws ResourceException 404 NOT FOUND si no existe un grupo musical registrado con el cif introducido,
+	 * 500 INTERNAL SERVER ERROR si se produce algún error en la generación del documento HTML
+	 * o 406 NOT ACCEPTABLE si el formato MediaType no esta soportado por el recurso.
 	 */
 	//Get con negociacion de contenido, txt y html
 	@Override
@@ -78,7 +85,7 @@ import sgae.util.generated.Link;
 			try{
 				//Informacion breve de cada album
 				for (sgae.nucleo.gruposMusicales.Album album: controladorGruposMusicales.recuperarAlbumes(this.cif)){
-					result2.append((album == null) ? "": "Titulo: "+album.getTitulo() + "\tUri relativa: " +album.getId()).append('\n');
+					result2.append((album == null) ? "": "Titulo: "+album.getTitulo() + "\tUri relativa: " +album.getId()+"/").append('\n');
 				}
 				result = new StringRepresentation(result2.toString());
 			}catch(ExcepcionGruposMusicales e){
@@ -99,7 +106,7 @@ import sgae.util.generated.Link;
 					albumInfo.setTitulo(a.getTitulo());
 					//URI del album
 					Link link = new Link();
-					link.setHref(a.getId());
+					link.setHref(a.getId()+"/");
 					link.setTitle("Álbumes");
 					link.setType("simple");
 					albumInfo.setUri(link);
@@ -128,12 +135,12 @@ import sgae.util.generated.Link;
 	}
 	/**
 	 * Método que realiza una operación POST sobre el recurso Álbumes con negociación de contenidos.
-	 * 
+	 *
 	 * @param data datos que se introcen en el formulario HTML.
 	 * @param variant nos indica el formato de la petición.
 	 * @return representación del recurso álbumes creado en formato HTML.
-	 * @throws ResourceException si la fecha de publicación se ha introducido en un formato incorrecto.
-	 * O si no existe un grupo musical registrado con el cif introducido.
+	 * @throws ResourceException 400 BAD REQUEST si la fecha de publicación se ha introducido en un formato incorrecto.
+	 * o 404 NOT FOUND si no existe un grupo musical registrado con el cif introducido.
 	 */
 
 	//Metodo Post para la creacion de albumes, con negociacion de contenido

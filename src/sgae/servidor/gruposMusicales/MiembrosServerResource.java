@@ -31,16 +31,22 @@ import java.util.Map;
 public class MiembrosServerResource extends ServerResource {
     //Obtenemos la referencia de la aplicacion
     private SGAEServerApplication ref = (SGAEServerApplication)getApplication();
+    /**
+     * ControladorGruposMusicales referencia al objeto de la clase SGAEServerApplication.
+     */
     //Objeto de la clase ControladorGruposMusicales que hace referencia al instanciado en la clase SGAEServerApplication
     private ControladorGruposMusicales controladorGruposMusicales = ref.getControladorGruposMusicales();
+    /**
+     * CIF del grupo musical.
+     */
     //Cif del grupo musical
     private String cif;
 
     /**
-	 * Método que realiza la inicialización estándar del recurso Miembros.
-	 * Se obtiene el cif del grupo musical introducido.
-	 * 
-	 */
+     * Método que realiza la inicialización estándar del recurso Miembros.
+     * Se obtiene el cif del grupo musical introducido.
+     *
+     */
 
     //Tareas a realizar en la inicializacion estandar del recurso
     //con negociacion de contenidos y obtencion del cif
@@ -51,13 +57,14 @@ public class MiembrosServerResource extends ServerResource {
         this.cif = getAttribute("cif");
     }
     /**
-	 * Método que realiza una operación GET sobre el recurso Miembros con negociación de contenidos.
-	 * 
-	 * @param variant nos indica si la petición es en formato texto plano o HTML.
-	 * @return la lista de miembros actuales y miembros anteriores en texto plano y HTML.
-	 * @throws ResourceException si no existe un grupo musical registrado con el cif introducido.
-	 * O si se produce un error al generar el documento HTML.
-	 */
+     * Método que realiza una operación GET sobre el recurso Miembros con negociación de contenidos.
+     *
+     * @param variant nos indica si la petición es en formato texto plano o HTML.
+     * @return la lista de miembros actuales y miembros anteriores en texto plano y HTML.
+     * @throws ResourceException 404 NOT FOUND si no existe un grupo musical registrado con el cif introducido,
+     * 500 INTERNAL SERVER ERROR si se produce un error al generar el documento HTML
+     * o 406 NOT ACCEPTABLE si el formato MediaType no es soportado por el recurso.
+     */
     //Get con negociacion de contenido, txt y html
     @Override
     protected Representation get(Variant variant)throws ResourceException{
