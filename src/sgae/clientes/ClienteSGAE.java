@@ -464,7 +464,7 @@ public class ClienteSGAE  {
         try {
             Form pista = new Form();
             pista.add("nombre","Flor");
-            pista.add("duracion","3");
+            pista.add("duracion","300");
 
             clientResource.post(pista);
             if(clientResource.getStatus().equals(Status.SUCCESS_CREATED)){
@@ -479,7 +479,7 @@ public class ClienteSGAE  {
         try {
             Form pista = new Form();
             pista.add("nombre","Tierra");
-            pista.add("duracion","5");
+            pista.add("duracion","500");
 
             clientResource.post(pista);
             if(clientResource.getStatus().equals(Status.SUCCESS_CREATED)){
